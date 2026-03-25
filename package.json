@@ -1,0 +1,13 @@
+{
+  "name": "mi-inventario-nodered",
+  "version": "1.0.0",
+  "description": "Servidor de Node-RED para mi inventario",
+  "main": "settings.js",
+  "scripts": {
+    "start": "node-red --userDir . --port $PORT"
+  },
+  "dependencies": {
+    "node-red": "latest",
+    "node-red-dashboard": "latest"
+  }
+}

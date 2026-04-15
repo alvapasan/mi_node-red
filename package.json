@@ -1,13 +1,14 @@
 {
-  "name": "mi-inventario-nodered",
+  "name": "proyecto-plc-alvaro",
   "version": "1.0.0",
-  "description": "Servidor de Node-RED para mi inventario",
-  "main": "settings.js",
+  "description": "Sistema de Login y PLC",
+  "main": "index.js",
   "scripts": {
-    "start": "node-red --userDir . --port $PORT"
+    "start": "node-red --userDir . --port $PORT flows.json"
   },
   "dependencies": {
     "node-red": "latest",
-    "node-red-dashboard": "latest"
+    "node-red-dashboard": "latest",
+    "node-red-contrib-postgresql": "latest"
   }
 }

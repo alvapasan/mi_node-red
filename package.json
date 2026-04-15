@@ -1,7 +1,7 @@
 {
-  "name": "proyecto-plc-alvaro",
+  "name": "proyecto-industrial-alvaro",
   "version": "1.0.0",
-  "description": "Sistema de Login y PLC",
+  "description": "Sistema de Control Industrial: Dashboard, Login de Usuarios, Base de Datos en Nube y Gestión de PLC (S7/Modbus)",
   "main": "index.js",
   "scripts": {
     "start": "node-red --userDir . --port $PORT flows.json"
@@ -9,6 +9,8 @@
   "dependencies": {
     "node-red": "latest",
     "node-red-dashboard": "latest",
-    "node-red-contrib-postgresql": "latest"
+    "node-red-contrib-postgresql": "latest",
+    "node-red-contrib-s7": "latest",
+    "node-red-contrib-modbus": "latest"
   }
 }

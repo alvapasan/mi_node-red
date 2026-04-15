@@ -1,0 +1,486 @@
+[
+    {
+        "id": "9ec947c35a431ce5",
+        "type": "tab",
+        "label": "Flujo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f_login_ui",
+        "type": "tab",
+        "label": "Login PLC Álvaro",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e13779ceda0d5c8e",
+        "type": "postgreSQLConfig",
+        "name": "",
+        "host": "hdb-4bxfwXyP.db.rocketadmin.com",
+        "hostFieldType": "str",
+        "port": 5432,
+        "portFieldType": "num",
+        "database": "hdb_4bxfwXyP",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": 10,
+        "maxFieldType": "num",
+        "idle": 1000,
+        "idleFieldType": "num",
+        "connectionTimeout": 10000,
+        "connectionTimeoutFieldType": "num",
+        "user": "hdb_4bxfwXyP",
+        "userFieldType": "str",
+        "password": "SnFBpxwYXZRzQKA9XuU_L8Buny2GbH17",
+        "passwordFieldType": "str"
+    },
+    {
+        "id": "ui_tab_login",
+        "type": "ui_tab",
+        "name": "Login",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "ui_group_login",
+        "type": "ui_group",
+        "name": "Acceso al Sistema",
+        "tab": "ui_tab_login",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ef6ea20ed5dfe34f",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "0c0edd181d603b20",
+        "type": "inject",
+        "z": "9ec947c35a431ce5",
+        "name": "Probar Conexión",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "SELECT NOW();",
+        "payloadType": "str",
+        "x": 680,
+        "y": 280,
+        "wires": [
+            [
+                "nodo_nube_plc"
+            ]
+        ]
+    },
+    {
+        "id": "da644cd951df4d95",
+        "type": "debug",
+        "z": "9ec947c35a431ce5",
+        "name": "Resultado DB",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "nodo_nube_plc",
+        "type": "postgresql",
+        "z": "9ec947c35a431ce5",
+        "name": "DB Nube PLC",
+        "query": "",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 920,
+        "y": 280,
+        "wires": [
+            [
+                "da644cd951df4d95"
+            ]
+        ]
+    },
+    {
+        "id": "get_users_node",
+        "type": "postgresql",
+        "z": "f_login_ui",
+        "name": "Cargar Usuarios",
+        "query": "SELECT nombre_completo as label, usuario as value FROM usuarios_login;",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 300,
+        "y": 80,
+        "wires": [
+            [
+                "format_dropdown"
+            ]
+        ]
+    },
+    {
+        "id": "inject_start",
+        "type": "inject",
+        "z": "f_login_ui",
+        "name": "Al arrancar",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "get_users_node"
+            ]
+        ]
+    },
+    {
+        "id": "format_dropdown",
+        "type": "change",
+        "z": "f_login_ui",
+        "name": "Formatear Lista",
+        "rules": [
+            {
+                "t": "set",
+                "p": "options",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 80,
+        "wires": [
+            [
+                "dropdown_ui"
+            ]
+        ]
+    },
+    {
+        "id": "dropdown_ui",
+        "type": "ui_dropdown",
+        "z": "f_login_ui",
+        "name": "Elegir Usuario",
+        "label": "Selecciona tu nombre",
+        "tooltip": "",
+        "place": "Cargando usuarios...",
+        "group": "ui_group_login",
+        "order": 1,
+        "width": 0,
+        "options": [],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 740,
+        "y": 80,
+        "wires": [
+            [
+                "save_user_context"
+            ]
+        ]
+    },
+    {
+        "id": "save_user_context",
+        "type": "change",
+        "z": "f_login_ui",
+        "name": "Guardar Usuario",
+        "rules": [
+            {
+                "t": "set",
+                "p": "selected_user",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 230,
+        "y": 340,
+        "wires": [
+            [
+                "password_form"
+            ]
+        ]
+    },
+    {
+        "id": "password_form",
+        "type": "ui_form",
+        "z": "f_login_ui",
+        "name": "Pop up Password",
+        "label": "Introduzca su contraseña",
+        "group": "ui_group_login",
+        "order": 2,
+        "width": 0,
+        "options": [
+            {
+                "label": "Contraseña",
+                "value": "pass",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "pass": ""
+        },
+        "payload": "",
+        "submit": "Entrar",
+        "cancel": "Cancelar",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 470,
+        "y": 340,
+        "wires": [
+            [
+                "check_pass_sql"
+            ]
+        ]
+    },
+    {
+        "id": "check_pass_sql",
+        "type": "function",
+        "z": "f_login_ui",
+        "name": "Validar en DB",
+        "func": "var user = flow.get(\"selected_user\");\nvar passInput = msg.payload.pass;\n\nmsg.payload = \"SELECT * FROM usuarios_login WHERE usuario = '\" + user + \"' AND password = '\" + passInput + \"';\";\nmsg.passInput = passInput;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 340,
+        "wires": [
+            [
+                "postgres_check"
+            ]
+        ]
+    },
+    {
+        "id": "postgres_check",
+        "type": "postgresql",
+        "z": "f_login_ui",
+        "name": "DB Check",
+        "query": "",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 860,
+        "y": 340,
+        "wires": [
+            [
+                "logic_result"
+            ]
+        ]
+    },
+    {
+        "id": "logic_result",
+        "type": "switch",
+        "z": "f_login_ui",
+        "name": "¿Es correcto?",
+        "property": "payload.length",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1160,
+        "y": 180,
+        "wires": [
+            [
+                "msg_ok"
+            ],
+            [
+                "msg_error"
+            ]
+        ]
+    },
+    {
+        "id": "msg_ok",
+        "type": "ui_toast",
+        "z": "f_login_ui",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "¡Bienvenido!",
+        "name": "Aviso Éxito",
+        "x": 1390,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "msg_error",
+        "type": "ui_toast",
+        "z": "f_login_ui",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "Reintentar",
+        "cancel": "",
+        "raw": false,
+        "topic": "Error: Contraseña incorrecta",
+        "name": "Aviso Error",
+        "x": 1390,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "b28ee13ba7579f81",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-postgresql": "0.15.4",
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

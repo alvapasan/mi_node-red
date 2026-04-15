@@ -1,16 +1,8 @@
 [
     {
-        "id": "9ec947c35a431ce5",
-        "type": "tab",
-        "label": "Flujo 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "f_login_ui",
         "type": "tab",
-        "label": "Login PLC Álvaro",
+        "label": "Login",
         "disabled": false,
         "info": ""
     },
@@ -38,23 +30,6 @@
         "userFieldType": "str",
         "password": "SnFBpxwYXZRzQKA9XuU_L8Buny2GbH17",
         "passwordFieldType": "str"
-    },
-    {
-        "id": "ui_tab_login",
-        "type": "ui_tab",
-        "name": "Login",
-        "icon": "dashboard",
-        "order": 1
-    },
-    {
-        "id": "ui_group_login",
-        "type": "ui_group",
-        "name": "Acceso al Sistema",
-        "tab": "ui_tab_login",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false
     },
     {
         "id": "ef6ea20ed5dfe34f",
@@ -154,262 +129,250 @@
         }
     },
     {
-        "id": "0c0edd181d603b20",
-        "type": "inject",
-        "z": "9ec947c35a431ce5",
-        "name": "Probar Conexión",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "SELECT NOW();",
-        "payloadType": "str",
-        "x": 680,
-        "y": 280,
-        "wires": [
-            [
-                "nodo_nube_plc"
-            ]
-        ]
+        "id": "b28ee13ba7579f81",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-postgresql": "0.15.4",
+            "node-red-dashboard": "3.6.6"
+        }
     },
     {
-        "id": "da644cd951df4d95",
-        "type": "debug",
-        "z": "9ec947c35a431ce5",
-        "name": "Resultado DB",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1140,
-        "y": 280,
-        "wires": []
+        "id": "c37fd202a8722ef3",
+        "type": "ui_tab",
+        "name": "PARTES",
+        "icon": "description",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
     },
     {
-        "id": "nodo_nube_plc",
-        "type": "postgresql",
-        "z": "9ec947c35a431ce5",
-        "name": "DB Nube PLC",
-        "query": "",
-        "postgreSQLConfig": "e13779ceda0d5c8e",
-        "split": false,
-        "rowsPerMsg": "",
-        "outputs": 1,
-        "x": 920,
-        "y": 280,
-        "wires": [
-            [
-                "da644cd951df4d95"
-            ]
-        ]
+        "id": "0ed1ee85ed6b6020",
+        "type": "ui_group",
+        "name": "Login",
+        "tab": "c37fd202a8722ef3",
+        "order": 1,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
     },
     {
-        "id": "get_users_node",
-        "type": "postgresql",
+        "id": "647159e976bd0344",
+        "type": "ui_template",
         "z": "f_login_ui",
-        "name": "Cargar Usuarios",
-        "query": "SELECT nombre_completo as label, usuario as value FROM usuarios_login;",
-        "postgreSQLConfig": "e13779ceda0d5c8e",
-        "split": false,
-        "rowsPerMsg": "",
-        "outputs": 1,
-        "x": 300,
-        "y": 80,
+        "group": "",
+        "name": "Diseño DashBoard",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    /* 1. CONFIGURACIÓN DE COLORES */\n    :root {\n        /* El azul clarito que antes era de cabecera, ahora es para el FONDO */\n        --color-fondo-pagina: #e3f2fd;\n\n        /* Un azul más intenso para la CABECERA */\n        --color-azul-cabecera-fuerte: #bbdefb;\n\n        /* Azul oscuro para textos de contraste */\n        --color-azul-oscuro-texto: #0d47a1;\n\n        --color-blanco-puro: #ffffff;\n        --color-bordes: #90caf9;\n    }\n\n    /* 2. FONDO GENERAL DE LA PÁGINA */\n    /* Aplicamos el azul clarito al contenedor principal */\n    .nr-dashboard-theme md-content {\n        background-color: var(--color-fondo-pagina) !important;\n    }\n\n    /* 3. ENCABEZADO (TOOLBAR) - AZUL MÁS OSCURITO */\n    body.nr-dashboard-theme md-toolbar {\n        background-color: var(--color-azul-cabecera-fuerte) !important;\n        color: var(--color-azul-oscuro-texto) !important;\n        border-bottom: 1px solid var(--color-bordes) !important;\n        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;\n    }\n\n    body.nr-dashboard-theme md-toolbar .md-toolbar-tools {\n        color: var(--color-azul-oscuro-texto) !important;\n        font-weight: bold !important;\n    }\n\n    /* Iconos de la cabecera */\n    body.nr-dashboard-theme md-toolbar .md-button md-icon {\n        color: var(--color-azul-oscuro-texto) !important;\n    }\n\n    /* 4. TARJETAS DE GRUPOS */\n    /* Mantenemos las tarjetas blancas para que \"floten\" sobre el fondo azul */\n    .nr-dashboard-theme ui-card-panel {\n        background-color: var(--color-blanco-puro) !important;\n        border: 1px solid var(--color-bordes) !important;\n        border-radius: 8px !important;\n        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;\n        margin: 12px !important;\n    }\n\n    /* Títulos de los grupos */\n    .nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {\n        color: var(--color-azul-oscuro-texto) !important;\n        font-weight: 800 !important;\n        border-bottom: 2px solid var(--color-fondo-pagina) !important;\n        padding-bottom: 10px !important;\n        text-transform: uppercase;\n    }\n\n    /* 5. TABLA (Haciendo juego con los nuevos azules) */\n    .tabulator-header {\n        background-color: var(--color-azul-cabecera-fuerte) !important;\n        color: var(--color-azul-oscuro-texto) !important;\n        border-bottom: 2px solid var(--color-bordes) !important;\n    }\n\n    /* Ajuste de inputs para que no se pierdan */\n    .nr-dashboard-theme md-input-container input {\n        background-color: var(--color-blanco-puro) !important;\n        border: 1px solid var(--color-bordes) !important;\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "global",
+        "className": "",
+        "x": 310,
+        "y": 660,
         "wires": [
-            [
-                "format_dropdown"
-            ]
+            []
         ]
     },
     {
-        "id": "inject_start",
+        "id": "f_carga",
         "type": "inject",
         "z": "f_login_ui",
-        "name": "Al arrancar",
+        "name": "1. CARGAR USUARIOS",
         "props": [],
         "repeat": "",
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 110,
-        "y": 80,
+        "x": 450,
+        "y": 200,
         "wires": [
             [
-                "get_users_node"
+                "f_sql_nombres"
             ]
         ]
     },
     {
-        "id": "format_dropdown",
-        "type": "change",
+        "id": "f_sql_nombres",
+        "type": "postgresql",
         "z": "f_login_ui",
-        "name": "Formatear Lista",
-        "rules": [
-            {
-                "t": "set",
-                "p": "options",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 520,
-        "y": 80,
+        "name": "SQL DB",
+        "query": "SELECT nombre_completo FROM usuarios_login;",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 680,
+        "y": 200,
         "wires": [
             [
-                "dropdown_ui"
+                "f_mapeo"
             ]
         ]
     },
     {
-        "id": "dropdown_ui",
+        "id": "f_mapeo",
+        "type": "function",
+        "z": "f_login_ui",
+        "name": "Mapear Nombres",
+        "func": "msg.options = [];\nfor (let i = 0; i < msg.payload.length; i++) {\n    msg.options[i] = msg.payload[i].nombre_completo;\n}\ndelete msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "x": 870,
+        "y": 200,
+        "wires": [
+            [
+                "f_dropdown"
+            ]
+        ]
+    },
+    {
+        "id": "f_dropdown",
         "type": "ui_dropdown",
         "z": "f_login_ui",
-        "name": "Elegir Usuario",
-        "label": "Selecciona tu nombre",
-        "tooltip": "",
-        "place": "Cargando usuarios...",
-        "group": "ui_group_login",
+        "name": "Selector",
+        "label": "Usuarios",
+        "group": "0ed1ee85ed6b6020",
         "order": 1,
-        "width": 0,
+        "passthru": true,
         "options": [],
-        "payload": "",
-        "topic": "topic",
-        "topicType": "msg",
-        "x": 740,
-        "y": 80,
+        "x": 1070,
+        "y": 200,
         "wires": [
             [
-                "save_user_context"
+                "f_guardar_nombre"
             ]
         ]
     },
     {
-        "id": "save_user_context",
+        "id": "f_guardar_nombre",
         "type": "change",
         "z": "f_login_ui",
-        "name": "Guardar Usuario",
+        "name": "Guardar Nombre",
         "rules": [
             {
                 "t": "set",
-                "p": "selected_user",
+                "p": "Nombre",
                 "pt": "flow",
                 "to": "payload",
                 "tot": "msg"
             }
         ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 230,
-        "y": 340,
+        "x": 1270,
+        "y": 200,
         "wires": [
             [
-                "password_form"
+                "f_lanzador"
             ]
         ]
     },
     {
-        "id": "password_form",
-        "type": "ui_form",
-        "z": "f_login_ui",
-        "name": "Pop up Password",
-        "label": "Introduzca su contraseña",
-        "group": "ui_group_login",
-        "order": 2,
-        "width": 0,
-        "options": [
-            {
-                "label": "Contraseña",
-                "value": "pass",
-                "type": "password",
-                "required": true,
-                "rows": null
-            }
-        ],
-        "formValue": {
-            "pass": ""
-        },
-        "payload": "",
-        "submit": "Entrar",
-        "cancel": "Cancelar",
-        "topic": "topic",
-        "topicType": "msg",
-        "x": 470,
-        "y": 340,
-        "wires": [
-            [
-                "check_pass_sql"
-            ]
-        ]
-    },
-    {
-        "id": "check_pass_sql",
+        "id": "f_lanzador",
         "type": "function",
         "z": "f_login_ui",
-        "name": "Validar en DB",
-        "func": "var user = flow.get(\"selected_user\");\nvar passInput = msg.payload.pass;\n\nmsg.payload = \"SELECT * FROM usuarios_login WHERE usuario = '\" + user + \"' AND password = '\" + passInput + \"';\";\nmsg.passInput = passInput;\nreturn msg;",
+        "name": "Lanzar Popup",
+        "func": "msg.payload = {\n    action: \"open\",\n    t: Date.now() // Esto hace que el mensaje sea único cada vez\n};\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 680,
-        "y": 340,
+        "x": 1480,
+        "y": 200,
         "wires": [
             [
-                "postgres_check"
+                "f_popup"
             ]
         ]
     },
     {
-        "id": "postgres_check",
-        "type": "postgresql",
+        "id": "f_popup",
+        "type": "ui_template",
         "z": "f_login_ui",
-        "name": "DB Check",
-        "query": "",
-        "postgreSQLConfig": "e13779ceda0d5c8e",
-        "split": false,
-        "rowsPerMsg": "",
-        "outputs": 1,
-        "x": 860,
-        "y": 340,
+        "group": "0ed1ee85ed6b6020",
+        "name": "Popup Pass",
+        "width": "",
+        "height": "",
+        "format": "<div ng-init=\"init()\" ng-show=\"showModal\">\n    <div style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; \n                background-color: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 9999;\">\n\n        <div style=\"background: #000000; padding: 30px; border-radius: 10px; text-align: center; width: 320px; \n                    border: 1px solid #367cff; box-shadow: 0 0 20px rgba(54, 124, 255, 0.4);\">\n\n            <div style=\"color: #5994ff; font-family: sans-serif; font-weight: bold; font-size: 22px; margin-bottom: 5px;\">\n                🔐 ACCESO\n            </div>\n\n            <div style=\"color: #5994ff; font-family: sans-serif; font-size: 11px; margin-bottom: 20px; letter-spacing: 2px; opacity: 0.8;\">\n                PASSWORD REQUIRED\n            </div>\n\n            <input\n                id=\"passInput\"\n                type=\"password\"\n                ng-model=\"pass\"\n                ng-keyup=\"$event.keyCode === 13 && enviar()\"\n                style=\"width: 100%; box-sizing: border-box; padding: 12px;\n                       background-color: #000000; border: 1px solid #367cff; color: #ffffff; border-radius: 4px;\n                       outline: none; font-size: 18px; text-align: center;\"\n                autocomplete=\"off\"\n            />\n\n            <br><br>\n\n            <div style=\"display: flex; justify-content: space-between; gap: 15px;\">\n                <button\n                    style=\"flex: 1; padding: 12px; background-color: #367cff; color: #ffffff; border: none; border-radius: 4px; \n                           cursor: pointer; font-weight: bold; text-transform: uppercase;\"\n                    ng-click=\"enviar()\">Entrar</button>\n\n                <button\n                    style=\"flex: 1; padding: 12px; background-color: #000000; color: #ffffff; border: 1px solid #367cff; \n                           border-radius: 4px; cursor: pointer; font-weight: bold;\"\n                    ng-click=\"cerrar()\">Salir</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<script>\n(function(scope) {\n    scope.showModal = false;\n\n    scope.init = function() {\n        // Escuchamos msg.payload.action en lugar de solo msg.payload\n        scope.$watch('msg.payload', function(data) {\n            if (data && data.action === 'open') {\n                scope.pass = ''; // Limpiamos cuadro\n                scope.showModal = true;\n                \n                // Forzamos el refresco visual\n                setTimeout(() => {\n                    const input = document.getElementById('passInput');\n                    if (input) { input.focus(); }\n                }, 150);\n            }\n        });\n    };\n\n    scope.enviar = function() {\n        scope.send({payload: scope.pass});\n        scope.showModal = false;\n    };\n\n    scope.cerrar = function() {\n        scope.showModal = false;\n    };\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1670,
+        "y": 200,
         "wires": [
             [
-                "logic_result"
+                "6d78a1ca3ea65fa6"
             ]
         ]
     },
     {
-        "id": "logic_result",
+        "id": "22143d7bdeccf5a2",
+        "type": "ui_toast",
+        "z": "f_login_ui",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "ACCESO CONCEDIDO ✅",
+        "name": "Aviso Éxito",
+        "x": 1370,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "5395ac2976366004",
+        "type": "ui_toast",
+        "z": "f_login_ui",
+        "position": "top right",
+        "displayTime": "4",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "Reintentar",
+        "cancel": "",
+        "raw": false,
+        "topic": "PASSWORD INCORRECTA ❌",
+        "name": "Aviso Error",
+        "x": 1370,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "6d78a1ca3ea65fa6",
+        "type": "function",
+        "z": "f_login_ui",
+        "name": "1. Preparar Consulta",
+        "func": "// 1. Guardamos la contraseña escrita en la memoria segura del flujo\nvar passLimpia = msg.payload.toString().trim();\nflow.set(\"PassEscrita\", passLimpia);\n\n// 2. Pedimos todos los usuarios a la base de datos\nmsg.payload = {\n    query: \"SELECT * FROM usuarios_login;\"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 440,
+        "wires": [
+            [
+                "048ac884b6e17c82"
+            ]
+        ]
+    },
+    {
+        "id": "4e43db65bcf1a28f",
         "type": "switch",
         "z": "f_login_ui",
-        "name": "¿Es correcto?",
+        "name": "4. Comprobar Acceso",
         "property": "payload.length",
         "propertyType": "msg",
         "rules": [
@@ -427,60 +390,53 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1160,
-        "y": 180,
+        "x": 1140,
+        "y": 440,
         "wires": [
             [
-                "msg_ok"
+                "22143d7bdeccf5a2"
             ],
             [
-                "msg_error"
+                "5395ac2976366004"
             ]
         ]
     },
     {
-        "id": "msg_ok",
-        "type": "ui_toast",
+        "id": "048ac884b6e17c82",
+        "type": "postgresql",
         "z": "f_login_ui",
-        "position": "top right",
-        "displayTime": "3",
-        "highlight": "",
-        "sendall": true,
-        "outputs": 0,
-        "ok": "OK",
-        "cancel": "",
-        "raw": false,
-        "topic": "¡Bienvenido!",
-        "name": "Aviso Éxito",
-        "x": 1390,
-        "y": 160,
-        "wires": []
+        "name": "2. Leer Usuarios (DB)",
+        "query": "SELECT * FROM usuarios_login;",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 640,
+        "y": 440,
+        "wires": [
+            [
+                "357fe5a9bf87ebe9"
+            ]
+        ]
     },
     {
-        "id": "msg_error",
-        "type": "ui_toast",
+        "id": "357fe5a9bf87ebe9",
+        "type": "function",
         "z": "f_login_ui",
-        "position": "top right",
-        "displayTime": "3",
-        "highlight": "",
-        "sendall": true,
-        "outputs": 0,
-        "ok": "Reintentar",
-        "cancel": "",
-        "raw": false,
-        "topic": "Error: Contraseña incorrecta",
-        "name": "Aviso Error",
-        "x": 1390,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "b28ee13ba7579f81",
-        "type": "global-config",
-        "env": [],
-        "modules": {
-            "node-red-contrib-postgresql": "0.15.4",
-            "node-red-dashboard": "3.6.6"
-        }
+        "name": "3. Validar Credenciales (JS)",
+        "func": "var tabla_usuarios = msg.payload;\nvar mi_nombre = flow.get(\"Nombre\");\nvar mi_pass = flow.get(\"PassEscrita\");\n\nif (mi_nombre) mi_nombre = mi_nombre.toString().trim();\nif (mi_pass) mi_pass = mi_pass.toString().trim();\n\nvar login_ok = false;\n\nif (tabla_usuarios && tabla_usuarios.length > 0) {\n    for (var i = 0; i < tabla_usuarios.length; i++) {\n        var db_nom = tabla_usuarios[i].nombre_completo.toString().trim();\n        var db_pass = tabla_usuarios[i].password.toString().trim();\n\n        if (db_nom === mi_nombre && db_pass === mi_pass) {\n            login_ok = true;\n            // Guardamos los datos del usuario en el flujo por si los necesitas luego\n            flow.set(\"DatosUsuario\", tabla_usuarios[i]);\n            break; \n        }\n    }\n}\n\nif (login_ok) {\n    node.warn(\"✅ Acceso correcto: \" + mi_nombre);\n    msg.payload = \" \"; // Enviamos un espacio en blanco para que no salga [object Object]\n} else {\n    node.warn(\"❌ Acceso fallido: \" + mi_nombre);\n    msg.payload = \"\"; // Enviamos vacío para que el Switch vaya por la ruta 2 (error)\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 440,
+        "wires": [
+            [
+                "4e43db65bcf1a28f"
+            ]
+        ]
     }
 ]

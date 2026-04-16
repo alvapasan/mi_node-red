@@ -673,7 +673,7 @@
         "y": 500,
         "wires": [
             [
-                "fcd10a5e91203ba5"
+                "f6b2e2edc4623958"
             ]
         ]
     },
@@ -702,7 +702,7 @@
         "y": 680,
         "wires": [
             [
-                "b7f595923a771f4a"
+                "22ca4d7f6eea07cc"
             ]
         ]
     },
@@ -731,7 +731,7 @@
         "y": 820,
         "wires": [
             [
-                "838400822742fc20"
+                "1c31fcfe2cd77490"
             ]
         ]
     },
@@ -760,7 +760,7 @@
         "y": 960,
         "wires": [
             [
-                "075b5d6a0510862e"
+                "4c9a8ebe4c03e126"
             ]
         ]
     },
@@ -789,7 +789,7 @@
         "y": 1120,
         "wires": [
             [
-                "43dec837112e2533"
+                "16537ba3b1ed93de"
             ]
         ]
     },
@@ -818,7 +818,7 @@
         "y": 1240,
         "wires": [
             [
-                "38d322d6e18ef503"
+                "e9473a22d2a33b47"
             ]
         ]
     },
@@ -836,126 +836,6 @@
         "y": 960,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "fcd10a5e91203ba5",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Blanca Pequeña",
-        "func": "let pieza_elegida = \"Blanca_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
-        "y": 600,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "b7f595923a771f4a",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Blanca Grande",
-        "func": "let pieza_elegida = \"Blanca_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 490,
-        "y": 760,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "838400822742fc20",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Negra Pequeña",
-        "func": "let pieza_elegida = \"Negra_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 490,
-        "y": 900,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "075b5d6a0510862e",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Negra Grande",
-        "func": "let pieza_elegida = \"Negra_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
-        "y": 1020,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "43dec837112e2533",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Metal Pequeña",
-        "func": "let pieza_elegida = \"Metal_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 490,
-        "y": 1180,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "38d322d6e18ef503",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Metal Grande",
-        "func": "let pieza_elegida = \"Metal_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 490,
-        "y": 1320,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
         ]
     },
     {
@@ -1271,7 +1151,7 @@
         "y": 600,
         "wires": [
             [
-                "fcd10a5e91203ba5"
+                "f6b2e2edc4623958"
             ]
         ]
     },
@@ -1288,7 +1168,7 @@
         "y": 760,
         "wires": [
             [
-                "b7f595923a771f4a"
+                "22ca4d7f6eea07cc"
             ]
         ]
     },
@@ -1305,7 +1185,7 @@
         "y": 900,
         "wires": [
             [
-                "838400822742fc20"
+                "1c31fcfe2cd77490"
             ]
         ]
     },
@@ -1322,7 +1202,7 @@
         "y": 1020,
         "wires": [
             [
-                "075b5d6a0510862e"
+                "4c9a8ebe4c03e126"
             ]
         ]
     },
@@ -1339,7 +1219,7 @@
         "y": 1180,
         "wires": [
             [
-                "43dec837112e2533"
+                "16537ba3b1ed93de"
             ]
         ]
     },
@@ -1356,7 +1236,127 @@
         "y": 1320,
         "wires": [
             [
-                "38d322d6e18ef503"
+                "e9473a22d2a33b47"
+            ]
+        ]
+    },
+    {
+        "id": "f6b2e2edc4623958",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Blanca Pequeña",
+        "func": "let pieza_elegida = \"Blanca_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 600,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "22ca4d7f6eea07cc",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Blanca Grande",
+        "func": "let pieza_elegida = \"Blanca_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 760,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "1c31fcfe2cd77490",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Negra Pequeña",
+        "func": "let pieza_elegida = \"Negra_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 900,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "4c9a8ebe4c03e126",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Negra Grande",
+        "func": "let pieza_elegida = \"Negra_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 1020,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "16537ba3b1ed93de",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Metal Pequeña",
+        "func": "let pieza_elegida = \"Metal_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1180,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "e9473a22d2a33b47",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Metal Grande",
+        "func": "let pieza_elegida = \"Metal_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1320,
+        "wires": [
+            [
+                "5daf76d322df86ae"
             ]
         ]
     }

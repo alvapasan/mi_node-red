@@ -127,12 +127,12 @@
             "sizes": {
                 "sx": 48,
                 "sy": 48,
-                "gx": 6,
-                "gy": 6,
+                "gx": 60,
+                "gy": 10,
                 "cx": 6,
                 "cy": 6,
-                "px": 0,
-                "py": 0
+                "px": 6,
+                "py": 6
             }
         }
     },
@@ -173,16 +173,48 @@
         "icon": "dashboard",
         "order": 2,
         "disabled": false,
-        "hidden": true
+        "hidden": false
     },
     {
         "id": "78d0549c66d87ad5",
         "type": "ui_group",
-        "name": "Datos",
+        "name": "Produccion diaria",
         "tab": "ea9fead6d8a3fa81",
         "order": 1,
         "disp": true,
         "width": 16,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "grupo_imagen",
+        "type": "ui_group",
+        "name": "FOTO",
+        "tab": "ea9fead6d8a3fa81",
+        "order": 3,
+        "disp": false,
+        "width": "5",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ui_group_imagen",
+        "type": "ui_group",
+        "name": "IMAGEN SIN MÁRGENES",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": "16",
+        "collapse": false
+    },
+    {
+        "id": "a85144b6feefd47f",
+        "type": "ui_group",
+        "name": "Grafica",
+        "tab": "ea9fead6d8a3fa81",
+        "order": 2,
+        "disp": true,
+        "width": "6",
         "collapse": false,
         "className": ""
     },
@@ -595,7 +627,7 @@
         "y": 580,
         "wires": [
             [
-                "6d963642bddb2335"
+                "fcd10a5e91203ba5"
             ]
         ]
     },
@@ -624,7 +656,7 @@
         "y": 640,
         "wires": [
             [
-                "10268d6b08094a34"
+                "b7f595923a771f4a"
             ]
         ]
     },
@@ -653,7 +685,7 @@
         "y": 700,
         "wires": [
             [
-                "890b244a49a7b106"
+                "838400822742fc20"
             ]
         ]
     },
@@ -682,7 +714,7 @@
         "y": 760,
         "wires": [
             [
-                "c2583dcebf246e13"
+                "075b5d6a0510862e"
             ]
         ]
     },
@@ -711,7 +743,7 @@
         "y": 820,
         "wires": [
             [
-                "74a67f19fc6b64b8"
+                "43dec837112e2533"
             ]
         ]
     },
@@ -740,7 +772,7 @@
         "y": 880,
         "wires": [
             [
-                "8915a2a6f4e21c70"
+                "38d322d6e18ef503"
             ]
         ]
     },
@@ -761,32 +793,341 @@
         ]
     },
     {
-        "id": "f8726a762f546e51",
-        "type": "ui_date_picker",
+        "id": "fcd10a5e91203ba5",
+        "type": "function",
         "z": "90e51c80d7614276",
-        "name": "Selector Fecha",
-        "label": "Día",
-        "group": "78d0549c66d87ad5",
-        "order": 1,
-        "width": 8,
-        "height": 1,
-        "passthru": true,
-        "topic": "fecha",
-        "topicType": "str",
-        "className": "",
-        "x": 780,
-        "y": 300,
+        "name": "+1 Pieza Blanca Pequeña",
+        "func": "let pieza_elegida = \"Blanca_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 580,
         "wires": [
             [
-                "1e329ce982e1ed18"
+                "5daf76d322df86ae"
             ]
         ]
     },
     {
-        "id": "ab632cf8ba6fbf60",
+        "id": "b7f595923a771f4a",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Blanca Grande",
+        "func": "let pieza_elegida = \"Blanca_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 640,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "838400822742fc20",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Negra Pequeña",
+        "func": "let pieza_elegida = \"Negra_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 700,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "075b5d6a0510862e",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Negra Grande",
+        "func": "let pieza_elegida = \"Negra_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 760,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "43dec837112e2533",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Metal Pequeña",
+        "func": "let pieza_elegida = \"Metal_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 820,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "38d322d6e18ef503",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Metal Grande",
+        "func": "let pieza_elegida = \"Metal_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 880,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "f_carga_inicial",
+        "type": "inject",
+        "z": "90e51c80d7614276",
+        "name": "Cargar Usuarios al inicio",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 300,
+        "wires": [
+            [
+                "f_sql_usuarios"
+            ]
+        ]
+    },
+    {
+        "id": "f_sql_usuarios",
+        "type": "postgresql",
+        "z": "90e51c80d7614276",
+        "name": "SQL Usuarios",
+        "query": "SELECT DISTINCT usuario FROM usuarios_login;",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 420,
+        "y": 300,
+        "wires": [
+            [
+                "1e6b01dc3bf2d6bf"
+            ]
+        ]
+    },
+    {
+        "id": "6d568246abc9490b",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Preparar Filtros",
+        "func": "if (msg.topic === \"fecha\") {\n    let d = new Date(msg.payload);\n    flow.set(\"filtro_fecha\", d.toISOString().split('T')[0]);\n}\nif (msg.topic === \"usuario\") {\n    flow.set(\"filtro_usuario\", msg.payload);\n}\nlet f = flow.get(\"filtro_fecha\");\nlet u = flow.get(\"filtro_usuario\");\nif (f && u) {\n    msg.params = [f, u];\n    return msg;\n}\nreturn null;",
+        "outputs": 1,
+        "x": 1110,
+        "y": 340,
+        "wires": [
+            [
+                "ece6cdc41778b739"
+            ]
+        ]
+    },
+    {
+        "id": "e0545e21fe23e987",
+        "type": "ui_template",
+        "z": "90e51c80d7614276",
+        "group": "78d0549c66d87ad5",
+        "name": "CSS Tabla Negro",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    /* 1. Cabecera NEGRA total */\n    .tabulator-header,\n    .tabulator-col {\n        background-color: #000000 !important;\n        color: #ffffff !important;\n        border-right: 1px solid #333 !important;\n    }\n\n    .tabulator-col-title {\n        font-size: 24px !important;\n        font-weight: 900 !important;\n        text-align: center !important;\n        width: 100% !important;\n    }\n\n    /* 2. Celdas: Centrado real sin que se muevan de columna */\n    .tabulator-cell {\n        font-size: 20px !important;\n        font-weight: bold !important;\n        text-align: center !important;\n        /* Centrado horizontal */\n        vertical-align: middle !important;\n        padding: 15px 0 !important;\n        border-right: 1px solid #eee !important;\n    }\n\n    /* 3. Columna Cantidad: Color azul y más grande */\n    .tabulator-cell[tabulator-field=\"Cantidad\"] {\n        color: #007bff !important;\n        font-size: 26px !important;\n        font-weight: 900 !important;\n    }\n\n    /* 4. Resaltar la última fila (EL TOTAL) */\n    .tabulator-row:last-child {\n        background-color: #e3f2fd !important;\n        border-top: 3px solid #000 !important;\n    }\n\n    .tabulator-row:last-child .tabulator-cell {\n        color: #000 !important;\n        font-size: 24px !important;\n    }\n\n    /* Altura de las filas */\n    .tabulator-row {\n        min-height: 65px !important;\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1570,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "66aef3fa64828928",
+        "type": "ui_template",
+        "z": "90e51c80d7614276",
+        "group": "grupo_imagen",
+        "name": "Visualizador de Imagen Pro",
+        "order": 1,
+        "width": 6,
+        "height": 5,
+        "format": "<div style=\"width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f8f8; overflow: hidden; margin: 0; padding: 0;\">\n    <img ng-src=\"{{msg.payload}}\" \n         style=\"width: 100%; height: 100%; object-fit: contain; display: block;\"\n         onerror=\"this.src='https://via.placeholder.com/400x300.png?text=ERROR+CARGA+URL'\">\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 1280,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "076c96e80c4fa306",
+        "type": "inject",
+        "z": "90e51c80d7614276",
+        "name": "Cargar FMS-205",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "https://www.edsolab.com/wp-content/uploads/2022/12/FMS-205_SE_I4.0-300x300.jpg",
+        "payloadType": "str",
+        "x": 1040,
+        "y": 140,
+        "wires": [
+            [
+                "66aef3fa64828928"
+            ]
+        ]
+    },
+    {
+        "id": "956e363404502256",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Estética + Cálculo Total",
+        "func": "let filas = msg.payload;\nlet sumaTotal = 0;\n\nif (Array.isArray(filas)) {\n    filas.forEach(f => {\n        sumaTotal += parseInt(f[\"Cantidad\"] || 0);\n    });\n\n    filas.push({\n        \"Tipo de Pieza\": \"TOTAL GENERAL\",\n        \"Cantidad\": sumaTotal\n    });\n}\n\nmsg.columns = [\n    {\n        \"title\": \"TIPO DE PIEZA\",\n        \"field\": \"Tipo de Pieza\",\n        \"widthGrow\": 7,\n        \"hozAlign\": \"center\",\n        \"headerHozAlign\": \"center\"\n    },\n    {\n        \"title\": \"CANTIDAD\",\n        \"field\": \"Cantidad\",\n        \"widthGrow\": 3,\n        \"hozAlign\": \"center\",\n        \"headerHozAlign\": \"center\"\n    }\n];\n\nmsg.payload = filas;\nreturn msg;",
+        "outputs": 1,
+        "x": 1540,
+        "y": 340,
+        "wires": [
+            [
+                "4e3a10ed6d557f63"
+            ]
+        ]
+    },
+    {
+        "id": "4e3a10ed6d557f63",
+        "type": "ui_table",
+        "z": "90e51c80d7614276",
+        "group": "78d0549c66d87ad5",
+        "name": "Tabla Resultados",
+        "order": 3,
+        "width": 16,
+        "height": 10,
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1820,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "39a65aa3af756bd6",
+        "type": "ui_chart",
+        "z": "90e51c80d7614276",
+        "name": "Gráfica Pie",
+        "group": "a85144b6feefd47f",
+        "order": 1,
+        "width": 6,
+        "height": 5,
+        "label": "Reparto de Producción",
+        "chartType": "pie",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Cargando producción...",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 1830,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "08c75444d73b82d5",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Preparar Datos Pie Chart",
+        "func": "let filas = msg.payload;\n\n// 1. Limpiamos la gráfica anterior para que no se amontonen las búsquedas\nnode.send({ payload: [] });\n\n// 2. Mandamos las porciones de la tarta una a una\nif (Array.isArray(filas)) {\n    filas.forEach(fila => {\n        let nombre = fila[\"Tipo de Pieza\"];\n        let valor = parseInt(fila[\"Cantidad\"]);\n\n        // Filtramos para ignorar el TOTAL y valores vacíos\n        if (nombre && !nombre.includes(\"TOTAL\") && valor > 0) {\n            node.send({\n                topic: nombre,\n                payload: valor\n            });\n        }\n    });\n}\n\n// Retornamos null porque ya hemos mandado los datos con node.send()\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1550,
+        "y": 480,
+        "wires": [
+            [
+                "39a65aa3af756bd6"
+            ]
+        ]
+    },
+    {
+        "id": "selector_usuario",
         "type": "ui_dropdown",
         "z": "90e51c80d7614276",
-        "name": "Selector Usuario",
+        "name": "Usuario",
         "label": "Usuario",
         "tooltip": "",
         "place": "",
@@ -801,243 +1142,73 @@
         "topic": "usuario",
         "topicType": "str",
         "className": "",
-        "x": 780,
-        "y": 380,
+        "x": 870,
+        "y": 300,
         "wires": [
             [
-                "1e329ce982e1ed18"
+                "6d568246abc9490b"
             ]
         ]
     },
     {
-        "id": "1e329ce982e1ed18",
+        "id": "selector_fecha",
+        "type": "ui_date_picker",
+        "z": "90e51c80d7614276",
+        "name": "Selector Fecha",
+        "label": "Día",
+        "group": "78d0549c66d87ad5",
+        "order": 1,
+        "width": 8,
+        "height": 1,
+        "passthru": true,
+        "topic": "fecha",
+        "topicType": "str",
+        "className": "",
+        "x": 840,
+        "y": 360,
+        "wires": [
+            [
+                "6d568246abc9490b"
+            ]
+        ]
+    },
+    {
+        "id": "1e6b01dc3bf2d6bf",
         "type": "function",
         "z": "90e51c80d7614276",
-        "name": "Preparar Filtros",
-        "func": "// 1. Guardamos en el flujo lo que acaba de llegar\nif (msg.topic === \"fecha\") {\n    let d = new Date(msg.payload);\n    let fechaFormateada = d.toISOString().split('T')[0];\n    flow.set(\"filtro_fecha\", fechaFormateada);\n}\n\nif (msg.topic === \"usuario\") {\n    flow.set(\"filtro_usuario\", msg.payload);\n}\n\n// 2. Recuperamos ambos valores\nlet f = flow.get(\"filtro_fecha\");\nlet u = flow.get(\"filtro_usuario\");\n\n// 3. Solo disparamos si tenemos ambos datos\nif (f && u) {\n    msg.params = [f, u];\n    msg.topic = \"BUSQUEDA\";\n    return msg;\n} else {\n    return null;\n}",
-        "outputs": 1,
-        "x": 1020,
-        "y": 340,
-        "wires": [
-            [
-                "65b961a3233f3475"
-            ]
-        ]
-    },
-    {
-        "id": "b042bbc073eaabb3",
-        "type": "inject",
-        "z": "90e51c80d7614276",
-        "name": "1. CARGAR USUARIOS",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 170,
-        "y": 380,
-        "wires": [
-            [
-                "8c8922dbc744e562"
-            ]
-        ]
-    },
-    {
-        "id": "8c8922dbc744e562",
-        "type": "postgresql",
-        "z": "90e51c80d7614276",
-        "name": "SQL DB",
-        "query": "SELECT DISTINCT usuario FROM usuarios_login;",
-        "postgreSQLConfig": "e13779ceda0d5c8e",
-        "split": false,
-        "rowsPerMsg": "",
-        "outputs": 1,
-        "x": 380,
-        "y": 380,
-        "wires": [
-            [
-                "54297c4e98bae413"
-            ]
-        ]
-    },
-    {
-        "id": "54297c4e98bae413",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "Mapear Usuarios",
-        "func": "let datos = msg.payload; // Aquí vienen los datos de SQL\nlet listaLimpia = [];\n\nfor (let i = 0; i < datos.length; i++) {\n    // Solo guardamos el texto del usuario, nada de objetos\n    listaLimpia.push(datos[i].usuario);\n}\n\n// Para el Dropdown, 'options' debe ser el array de textos\nmsg.options = listaLimpia;\nmsg.payload = \"\"; \n\nreturn msg;",
+        "name": "Mapear Dropdown Corregido",
+        "func": "let lista = msg.payload;\n// 1. Añadimos la opción global al principio de la lista\nlet opciones = [\"Producción total\"]; \n\n// 2. Extraemos los usuarios de la base de datos y los añadimos después\nif (Array.isArray(lista)) {\n    for (let i = 0; i < lista.length; i++) {\n        if (lista[i].usuario) {\n            opciones.push(lista[i].usuario);\n        }\n    }\n}\n\nmsg.options = opciones;\nmsg.payload = \"\"; \nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 570,
-        "y": 380,
+        "x": 660,
+        "y": 300,
         "wires": [
             [
-                "ab632cf8ba6fbf60"
+                "selector_usuario"
             ]
         ]
     },
     {
-        "id": "0b63a93e4b941f64",
-        "type": "ui_table",
-        "z": "90e51c80d7614276",
-        "group": "78d0549c66d87ad5",
-        "name": "Tabla Resultados",
-        "order": 3,
-        "width": 16,
-        "height": 9,
-        "columns": [],
-        "outputs": 0,
-        "cts": false,
-        "x": 1830,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "65b961a3233f3475",
+        "id": "ece6cdc41778b739",
         "type": "postgresql",
         "z": "90e51c80d7614276",
-        "name": "Consultar Historial",
-        "query": "SELECT tipo_pieza AS \"Tipo de Pieza\", cantidad AS \"Cantidad\" FROM registro_piezas WHERE fecha = $1 AND usuario = $2;",
+        "name": "SQL Historial",
+        "query": "SELECT tipo_pieza AS \"Tipo de Pieza\", SUM(cantidad) AS \"Cantidad\" FROM registro_piezas WHERE fecha = $1 AND ($2 = 'Producción total' OR usuario = $2) GROUP BY tipo_pieza;",
         "postgreSQLConfig": "e13779ceda0d5c8e",
         "split": false,
         "rowsPerMsg": "",
         "outputs": 1,
-        "x": 1240,
+        "x": 1310,
         "y": 340,
         "wires": [
             [
-                "d78a7eac1ae9b956"
+                "956e363404502256",
+                "08c75444d73b82d5"
             ]
-        ]
-    },
-    {
-        "id": "6d963642bddb2335",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Blanca Pequeña",
-        "func": "let pieza_elegida = \"⚪🔹 Pieza Blanca Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
-        "outputs": 1,
-        "x": 490,
-        "y": 580,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "10268d6b08094a34",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Blanca Grande",
-        "func": "let pieza_elegida = \"⚪🔷 Pieza Blanca Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
-        "outputs": 1,
-        "x": 490,
-        "y": 640,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "890b244a49a7b106",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Negra Pequeña",
-        "func": "let pieza_elegida = \"⚫🔹 Pieza Negra Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
-        "outputs": 1,
-        "x": 490,
-        "y": 700,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "c2583dcebf246e13",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Negra Grande",
-        "func": "let pieza_elegida = \"⚫🔷 Pieza Negra Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
-        "outputs": 1,
-        "x": 490,
-        "y": 760,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "74a67f19fc6b64b8",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Metal Pequeña",
-        "func": "let pieza_elegida = \"⚙️🔹 Pieza Metal Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
-        "outputs": 1,
-        "x": 490,
-        "y": 820,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "8915a2a6f4e21c70",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Metal Grande",
-        "func": "let pieza_elegida = \"⚙️🔷 Pieza Metal Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
-        "outputs": 1,
-        "x": 490,
-        "y": 880,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "d78a7eac1ae9b956",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "Estetica tabla + Calculo Total",
-        "func": "// 1. Calculamos la suma de todas las cantidades\nlet filas = msg.payload;\nlet sumaTotal = 0;\n\nif (Array.isArray(filas)) {\n    filas.forEach(fila => {\n        sumaTotal += parseInt(fila[\"Cantidad\"] || 0);\n    });\n\n    // 2. Añadimos la fila de TOTAL al final del array\n    filas.push({\n        \"Tipo de Pieza\": \"📊 TOTAL GENERAL\",\n        \"Cantidad\": sumaTotal\n    });\n}\n\n// 3. Configuramos las columnas (70% - 30%)\nmsg.columns = [\n    {\n        \"title\": \"TIPO DE PIEZA\",\n        \"field\": \"Tipo de Pieza\",\n        \"widthGrow\": 7,\n        \"hozAlign\": \"center\",\n        \"headerHozAlign\": \"center\"\n    },\n    {\n        \"title\": \"CANTIDAD\",\n        \"field\": \"Cantidad\",\n        \"widthGrow\": 3,\n        \"hozAlign\": \"center\",\n        \"headerHozAlign\": \"center\"\n    }\n];\n\nmsg.payload = filas;\nreturn msg;",
-        "outputs": 1,
-        "x": 1510,
-        "y": 340,
-        "wires": [
-            [
-                "0b63a93e4b941f64"
-            ]
-        ]
-    },
-    {
-        "id": "a5d52c31192f9fe9",
-        "type": "ui_template",
-        "z": "90e51c80d7614276",
-        "group": "78d0549c66d87ad5",
-        "name": "CSS Tabla + Resaltar Total",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "format": "<style>\n    /* 1. Cabecera NEGRA */\n    .tabulator-header, .tabulator-col {\n        background-color: #000000 !important;\n        color: #ffffff !important;\n    }\n\n    .tabulator-col-title {\n        font-size: 24px !important;\n        font-weight: 900 !important;\n    }\n\n    /* 2. Celdas de datos */\n    .tabulator-cell {\n        font-size: 20px !important;\n        font-weight: bold !important;\n        text-align: center !important;\n        padding: 15px 0 !important;\n    }\n\n    /* 3. Estilo especial para la última fila (EL TOTAL) */\n    .tabulator-row:last-child {\n        background-color: #e3f2fd !important; /* Azul muy clarito */\n        border-top: 3px solid #000 !important; /* Línea gruesa divisoria */\n    }\n\n    .tabulator-row:last-child .tabulator-cell {\n        color: #000 !important;\n        font-size: 24px !important;\n        font-weight: 900 !important;\n    }\n\n    /* 4. Color azul para los números de cantidad normales */\n    .tabulator-cell[tabulator-field=\"Cantidad\"] {\n        color: #007bff !important;\n    }\n</style>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "x": 1520,
-        "y": 400,
-        "wires": [
-            []
         ]
     }
 ]

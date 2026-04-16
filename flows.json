@@ -7,6 +7,14 @@
         "info": ""
     },
     {
+        "id": "90e51c80d7614276",
+        "type": "tab",
+        "label": "Historial",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "e13779ceda0d5c8e",
         "type": "postgreSQLConfig",
         "name": "",
@@ -134,13 +142,14 @@
         "env": [],
         "modules": {
             "node-red-contrib-postgresql": "0.15.4",
-            "node-red-dashboard": "3.6.6"
+            "node-red-dashboard": "3.6.6",
+            "node-red-node-ui-table": "0.4.5"
         }
     },
     {
         "id": "c37fd202a8722ef3",
         "type": "ui_tab",
-        "name": "PARTES",
+        "name": "Inicio",
         "icon": "description",
         "order": 1,
         "disabled": false,
@@ -154,6 +163,37 @@
         "order": 1,
         "disp": true,
         "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ea9fead6d8a3fa81",
+        "type": "ui_tab",
+        "name": "Historial",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "78d0549c66d87ad5",
+        "type": "ui_group",
+        "name": "Datos",
+        "tab": "ea9fead6d8a3fa81",
+        "order": 1,
+        "disp": true,
+        "width": 15,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b0a7b1489b3fb67e",
+        "type": "ui_group",
+        "name": "Buscador",
+        "tab": "ea9fead6d8a3fa81",
+        "order": 2,
+        "disp": true,
+        "width": 6,
         "collapse": false,
         "className": ""
     },
@@ -172,8 +212,8 @@
         "resendOnRefresh": true,
         "templateScope": "global",
         "className": "",
-        "x": 310,
-        "y": 660,
+        "x": 230,
+        "y": 620,
         "wires": [
             []
         ]
@@ -327,7 +367,7 @@
         "topic": "ACCESO CONCEDIDO ✅",
         "name": "Aviso Éxito",
         "x": 1370,
-        "y": 400,
+        "y": 360,
         "wires": []
     },
     {
@@ -345,7 +385,7 @@
         "topic": "PASSWORD INCORRECTA ❌",
         "name": "Aviso Error",
         "x": 1370,
-        "y": 460,
+        "y": 500,
         "wires": []
     },
     {
@@ -394,10 +434,12 @@
         "y": 440,
         "wires": [
             [
-                "22143d7bdeccf5a2"
+                "22143d7bdeccf5a2",
+                "dccae7353c392b24"
             ],
             [
-                "5395ac2976366004"
+                "5395ac2976366004",
+                "fa7759554fbbaf1a"
             ]
         ]
     },
@@ -424,7 +466,7 @@
         "type": "function",
         "z": "f_login_ui",
         "name": "3. Validar Credenciales (JS)",
-        "func": "var tabla_usuarios = msg.payload;\nvar mi_nombre = flow.get(\"Nombre\");\nvar mi_pass = flow.get(\"PassEscrita\");\n\nif (mi_nombre) mi_nombre = mi_nombre.toString().trim();\nif (mi_pass) mi_pass = mi_pass.toString().trim();\n\nvar login_ok = false;\n\nif (tabla_usuarios && tabla_usuarios.length > 0) {\n    for (var i = 0; i < tabla_usuarios.length; i++) {\n        var db_nom = tabla_usuarios[i].nombre_completo.toString().trim();\n        var db_pass = tabla_usuarios[i].password.toString().trim();\n\n        if (db_nom === mi_nombre && db_pass === mi_pass) {\n            login_ok = true;\n            // Guardamos los datos del usuario en el flujo por si los necesitas luego\n            flow.set(\"DatosUsuario\", tabla_usuarios[i]);\n            break; \n        }\n    }\n}\n\nif (login_ok) {\n    node.warn(\"✅ Acceso correcto: \" + mi_nombre);\n    msg.payload = \" \"; // Enviamos un espacio en blanco para que no salga [object Object]\n} else {\n    node.warn(\"❌ Acceso fallido: \" + mi_nombre);\n    msg.payload = \"\"; // Enviamos vacío para que el Switch vaya por la ruta 2 (error)\n}\n\nreturn msg;",
+        "func": "var tabla_usuarios = msg.payload;\nvar mi_nombre = flow.get(\"Nombre\");\nvar mi_pass = flow.get(\"PassEscrita\");\n\nif (mi_nombre) mi_nombre = mi_nombre.toString().trim();\nif (mi_pass) mi_pass = mi_pass.toString().trim();\n\nvar login_ok = false;\n\nif (tabla_usuarios && tabla_usuarios.length > 0) {\n    for (var i = 0; i < tabla_usuarios.length; i++) {\n        var db_nom = tabla_usuarios[i].nombre_completo.toString().trim();\n        var db_pass = tabla_usuarios[i].password.toString().trim();\n\n        if (db_nom === mi_nombre && db_pass === mi_pass) {\n            login_ok = true;\n            // Guardamos los datos en el flow (como ya tenías)\n            flow.set(\"DatosUsuario\", tabla_usuarios[i]);\n\n            // ¡NUEVO!: Guardamos el usuario (ej: \"FHC3\") en la variable global para el fichaje\n            global.set(\"usuario_activo\", tabla_usuarios[i].usuario);\n\n            break;\n        }\n    }\n}\n\nif (login_ok) {\n    node.warn(\"✅ Acceso correcto: \" + mi_nombre);\n    msg.payload = \" \"; // Va por la ruta 1 (Éxito)\n} else {\n    node.warn(\"❌ Acceso fallido: \" + mi_nombre);\n    msg.payload = \"\"; // Va por la ruta 2 (Error)\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -438,5 +480,533 @@
                 "4e43db65bcf1a28f"
             ]
         ]
+    },
+    {
+        "id": "dccae7353c392b24",
+        "type": "link out",
+        "z": "f_login_ui",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "1c8102a8f87c5561"
+        ],
+        "x": 1315,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "fa7759554fbbaf1a",
+        "type": "link out",
+        "z": "f_login_ui",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "0790dcb710f4a4b2"
+        ],
+        "x": 1315,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "0790dcb710f4a4b2",
+        "type": "link in",
+        "z": "f_login_ui",
+        "name": "link in 1",
+        "links": [
+            "fa7759554fbbaf1a"
+        ],
+        "x": 1345,
+        "y": 120,
+        "wires": [
+            [
+                "f_lanzador"
+            ]
+        ]
+    },
+    {
+        "id": "25bdb51e45f9d2db",
+        "type": "comment",
+        "z": "f_login_ui",
+        "name": "Inicio",
+        "info": "",
+        "x": 210,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "1c8102a8f87c5561",
+        "type": "link in",
+        "z": "90e51c80d7614276",
+        "name": "link in 2",
+        "links": [
+            "dccae7353c392b24"
+        ],
+        "x": 245,
+        "y": 160,
+        "wires": [
+            [
+                "a38b265e1ea88f89"
+            ]
+        ]
+    },
+    {
+        "id": "a38b265e1ea88f89",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Cambio de Pagina",
+        "func": "// El payload debe ser exactamente el nombre de la pestaña (Tab) de destino\nmsg.payload = \"Historial\";\n\n// También puedes usar el índice (empezando desde 0)\n// msg.payload = 0; // Esto iría a la primera pestaña\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "9e162e8cfc7bdd87"
+            ]
+        ]
+    },
+    {
+        "id": "9e162e8cfc7bdd87",
+        "type": "ui_ui_control",
+        "z": "90e51c80d7614276",
+        "name": "",
+        "events": "all",
+        "x": 620,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8655584731f85d32",
+        "type": "inject",
+        "z": "90e51c80d7614276",
+        "name": "Pieza 1",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 580,
+        "wires": [
+            [
+                "fcd10a5e91203ba5"
+            ]
+        ]
+    },
+    {
+        "id": "a5d2ce873017674e",
+        "type": "inject",
+        "z": "90e51c80d7614276",
+        "name": "Pieza 2",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 640,
+        "wires": [
+            [
+                "b7f595923a771f4a"
+            ]
+        ]
+    },
+    {
+        "id": "e8a19a780b76191e",
+        "type": "inject",
+        "z": "90e51c80d7614276",
+        "name": "Pieza 3",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 700,
+        "wires": [
+            [
+                "838400822742fc20"
+            ]
+        ]
+    },
+    {
+        "id": "afec4364e16258e5",
+        "type": "inject",
+        "z": "90e51c80d7614276",
+        "name": "Pieza 4",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 760,
+        "wires": [
+            [
+                "075b5d6a0510862e"
+            ]
+        ]
+    },
+    {
+        "id": "08af7ff3336c2783",
+        "type": "inject",
+        "z": "90e51c80d7614276",
+        "name": "Pieza 5",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 820,
+        "wires": [
+            [
+                "43dec837112e2533"
+            ]
+        ]
+    },
+    {
+        "id": "d4db77e73b260663",
+        "type": "inject",
+        "z": "90e51c80d7614276",
+        "name": "Pieza 6",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 880,
+        "wires": [
+            [
+                "38d322d6e18ef503"
+            ]
+        ]
+    },
+    {
+        "id": "5daf76d322df86ae",
+        "type": "postgresql",
+        "z": "90e51c80d7614276",
+        "name": "SQL DB",
+        "query": "INSERT INTO registro_piezas (tipo_pieza, usuario, fecha, cantidad)\nVALUES ($1, $2, CURRENT_DATE, $3)\nON CONFLICT (tipo_pieza, usuario, fecha)\nDO UPDATE SET cantidad = registro_piezas.cantidad + EXCLUDED.cantidad;",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 820,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fcd10a5e91203ba5",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Blanca Pequeña",
+        "func": "let pieza_elegida = \"Blanca_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 580,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "b7f595923a771f4a",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Blanca Grande",
+        "func": "let pieza_elegida = \"Blanca_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 640,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "838400822742fc20",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Negra Pequeña",
+        "func": "let pieza_elegida = \"Negra_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 700,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "075b5d6a0510862e",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Negra Grande",
+        "func": "let pieza_elegida = \"Negra_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 760,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "43dec837112e2533",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Metal Pequeña",
+        "func": "let pieza_elegida = \"Metal_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 820,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "38d322d6e18ef503",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Metal Grande",
+        "func": "let pieza_elegida = \"Metal_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 880,
+        "wires": [
+            [
+                "5daf76d322df86ae"
+            ]
+        ]
+    },
+    {
+        "id": "f3058f885b15fa22",
+        "type": "ui_date_picker",
+        "z": "90e51c80d7614276",
+        "name": "Selector Fecha",
+        "label": "Día",
+        "group": "b0a7b1489b3fb67e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "fecha",
+        "x": 270,
+        "y": 340,
+        "wires": [
+            [
+                "41bf10a3f79fb43e"
+            ]
+        ]
+    },
+    {
+        "id": "77781b2409e1abfb",
+        "type": "ui_dropdown",
+        "z": "90e51c80d7614276",
+        "name": "Selector Usuario",
+        "label": "Usuario",
+        "group": "b0a7b1489b3fb67e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [
+            {
+                "label": "Alvaro (AAS1)",
+                "value": "AAS1",
+                "type": "str"
+            },
+            {
+                "label": "Raul (RGR2)",
+                "value": "RGR2",
+                "type": "str"
+            },
+            {
+                "label": "Fabian (FHC3)",
+                "value": "FHC3",
+                "type": "str"
+            }
+        ],
+        "topic": "usuario",
+        "x": 280,
+        "y": 420,
+        "wires": [
+            [
+                "41bf10a3f79fb43e"
+            ]
+        ]
+    },
+    {
+        "id": "41bf10a3f79fb43e",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Preparar Filtros",
+        "func": "// 1. Guardamos en el flujo lo que acaba de llegar\nif (msg.topic === \"fecha\") {\n    let d = new Date(msg.payload);\n    let fechaFormateada = d.toISOString().split('T')[0];\n    flow.set(\"filtro_fecha\", fechaFormateada);\n}\n\nif (msg.topic === \"usuario\") {\n    flow.set(\"filtro_usuario\", msg.payload);\n}\n\n// 2. Recuperamos ambos valores\nlet f = flow.get(\"filtro_fecha\");\nlet u = flow.get(\"filtro_usuario\");\n\n// 3. Solo disparamos si tenemos ambos datos\nif (f && u) {\n    msg.params = [f, u];\n    return msg;\n} else {\n    return null; // No hace nada hasta tener los dos\n}",
+        "outputs": 1,
+        "x": 530,
+        "y": 380,
+        "wires": [
+            [
+                "65b961a3233f3475"
+            ]
+        ]
+    },
+    {
+        "id": "65b961a3233f3475",
+        "type": "postgresql",
+        "z": "90e51c80d7614276",
+        "name": "Consultar Historial",
+        "query": "SELECT tipo_pieza, cantidad FROM registro_piezas WHERE fecha = $1 AND usuario = $2;",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "outputs": 1,
+        "x": 760,
+        "y": 380,
+        "wires": [
+            [
+                "b8d42f9e3307b5c9"
+            ]
+        ]
+    },
+    {
+        "id": "b8d42f9e3307b5c9",
+        "type": "ui_table",
+        "z": "90e51c80d7614276",
+        "group": "78d0549c66d87ad5",
+        "name": "Tabla Resultados",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "columns": [
+            {
+                "field": "tipo_pieza",
+                "title": "Pieza",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "cantidad",
+                "title": "Cantidad Total",
+                "width": "",
+                "align": "center",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 0,
+        "x": 990,
+        "y": 380,
+        "wires": []
     }
 ]

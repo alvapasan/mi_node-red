@@ -173,7 +173,7 @@
         "icon": "dashboard",
         "order": 2,
         "disabled": false,
-        "hidden": false
+        "hidden": true
     },
     {
         "id": "78d0549c66d87ad5",
@@ -182,18 +182,7 @@
         "tab": "ea9fead6d8a3fa81",
         "order": 1,
         "disp": true,
-        "width": 15,
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "b0a7b1489b3fb67e",
-        "type": "ui_group",
-        "name": "Buscador",
-        "tab": "ea9fead6d8a3fa81",
-        "order": 2,
-        "disp": true,
-        "width": 6,
+        "width": 16,
         "collapse": false,
         "className": ""
     },
@@ -606,7 +595,7 @@
         "y": 580,
         "wires": [
             [
-                "fcd10a5e91203ba5"
+                "6d963642bddb2335"
             ]
         ]
     },
@@ -635,7 +624,7 @@
         "y": 640,
         "wires": [
             [
-                "b7f595923a771f4a"
+                "10268d6b08094a34"
             ]
         ]
     },
@@ -664,7 +653,7 @@
         "y": 700,
         "wires": [
             [
-                "838400822742fc20"
+                "890b244a49a7b106"
             ]
         ]
     },
@@ -693,7 +682,7 @@
         "y": 760,
         "wires": [
             [
-                "075b5d6a0510862e"
+                "c2583dcebf246e13"
             ]
         ]
     },
@@ -722,7 +711,7 @@
         "y": 820,
         "wires": [
             [
-                "43dec837112e2533"
+                "74a67f19fc6b64b8"
             ]
         ]
     },
@@ -751,7 +740,7 @@
         "y": 880,
         "wires": [
             [
-                "38d322d6e18ef503"
+                "8915a2a6f4e21c70"
             ]
         ]
     },
@@ -772,18 +761,168 @@
         ]
     },
     {
-        "id": "fcd10a5e91203ba5",
+        "id": "f8726a762f546e51",
+        "type": "ui_date_picker",
+        "z": "90e51c80d7614276",
+        "name": "Selector Fecha",
+        "label": "Día",
+        "group": "78d0549c66d87ad5",
+        "order": 1,
+        "width": 8,
+        "height": 1,
+        "passthru": true,
+        "topic": "fecha",
+        "topicType": "str",
+        "className": "",
+        "x": 780,
+        "y": 300,
+        "wires": [
+            [
+                "1e329ce982e1ed18"
+            ]
+        ]
+    },
+    {
+        "id": "ab632cf8ba6fbf60",
+        "type": "ui_dropdown",
+        "z": "90e51c80d7614276",
+        "name": "Selector Usuario",
+        "label": "Usuario",
+        "tooltip": "",
+        "place": "",
+        "group": "78d0549c66d87ad5",
+        "order": 2,
+        "width": 8,
+        "height": 1,
+        "passthru": true,
+        "multiple": false,
+        "options": [],
+        "payload": "",
+        "topic": "usuario",
+        "topicType": "str",
+        "className": "",
+        "x": 780,
+        "y": 380,
+        "wires": [
+            [
+                "1e329ce982e1ed18"
+            ]
+        ]
+    },
+    {
+        "id": "1e329ce982e1ed18",
         "type": "function",
         "z": "90e51c80d7614276",
-        "name": "+1 Pieza Blanca Pequeña",
-        "func": "let pieza_elegida = \"Blanca_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "name": "Preparar Filtros",
+        "func": "// 1. Guardamos en el flujo lo que acaba de llegar\nif (msg.topic === \"fecha\") {\n    let d = new Date(msg.payload);\n    let fechaFormateada = d.toISOString().split('T')[0];\n    flow.set(\"filtro_fecha\", fechaFormateada);\n}\n\nif (msg.topic === \"usuario\") {\n    flow.set(\"filtro_usuario\", msg.payload);\n}\n\n// 2. Recuperamos ambos valores\nlet f = flow.get(\"filtro_fecha\");\nlet u = flow.get(\"filtro_usuario\");\n\n// 3. Solo disparamos si tenemos ambos datos\nif (f && u) {\n    msg.params = [f, u];\n    msg.topic = \"BUSQUEDA\";\n    return msg;\n} else {\n    return null;\n}",
         "outputs": 1,
-        "timeout": 0,
+        "x": 1020,
+        "y": 340,
+        "wires": [
+            [
+                "65b961a3233f3475"
+            ]
+        ]
+    },
+    {
+        "id": "b042bbc073eaabb3",
+        "type": "inject",
+        "z": "90e51c80d7614276",
+        "name": "1. CARGAR USUARIOS",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 380,
+        "wires": [
+            [
+                "8c8922dbc744e562"
+            ]
+        ]
+    },
+    {
+        "id": "8c8922dbc744e562",
+        "type": "postgresql",
+        "z": "90e51c80d7614276",
+        "name": "SQL DB",
+        "query": "SELECT DISTINCT usuario FROM usuarios_login;",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "54297c4e98bae413"
+            ]
+        ]
+    },
+    {
+        "id": "54297c4e98bae413",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Mapear Usuarios",
+        "func": "let datos = msg.payload; // Aquí vienen los datos de SQL\nlet listaLimpia = [];\n\nfor (let i = 0; i < datos.length; i++) {\n    // Solo guardamos el texto del usuario, nada de objetos\n    listaLimpia.push(datos[i].usuario);\n}\n\n// Para el Dropdown, 'options' debe ser el array de textos\nmsg.options = listaLimpia;\nmsg.payload = \"\"; \n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 470,
+        "x": 570,
+        "y": 380,
+        "wires": [
+            [
+                "ab632cf8ba6fbf60"
+            ]
+        ]
+    },
+    {
+        "id": "0b63a93e4b941f64",
+        "type": "ui_table",
+        "z": "90e51c80d7614276",
+        "group": "78d0549c66d87ad5",
+        "name": "Tabla Resultados",
+        "order": 3,
+        "width": 16,
+        "height": 9,
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1830,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "65b961a3233f3475",
+        "type": "postgresql",
+        "z": "90e51c80d7614276",
+        "name": "Consultar Historial",
+        "query": "SELECT tipo_pieza AS \"Tipo de Pieza\", cantidad AS \"Cantidad\" FROM registro_piezas WHERE fecha = $1 AND usuario = $2;",
+        "postgreSQLConfig": "e13779ceda0d5c8e",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 1240,
+        "y": 340,
+        "wires": [
+            [
+                "d78a7eac1ae9b956"
+            ]
+        ]
+    },
+    {
+        "id": "6d963642bddb2335",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "+1 Pieza Blanca Pequeña",
+        "func": "let pieza_elegida = \"⚪🔹 Pieza Blanca Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
+        "outputs": 1,
+        "x": 490,
         "y": 580,
         "wires": [
             [
@@ -792,18 +931,13 @@
         ]
     },
     {
-        "id": "b7f595923a771f4a",
+        "id": "10268d6b08094a34",
         "type": "function",
         "z": "90e51c80d7614276",
         "name": "+1 Pieza Blanca Grande",
-        "func": "let pieza_elegida = \"Blanca_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "func": "let pieza_elegida = \"⚪🔷 Pieza Blanca Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
         "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
+        "x": 490,
         "y": 640,
         "wires": [
             [
@@ -812,18 +946,13 @@
         ]
     },
     {
-        "id": "838400822742fc20",
+        "id": "890b244a49a7b106",
         "type": "function",
         "z": "90e51c80d7614276",
         "name": "+1 Pieza Negra Pequeña",
-        "func": "let pieza_elegida = \"Negra_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "func": "let pieza_elegida = \"⚫🔹 Pieza Negra Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
         "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
+        "x": 490,
         "y": 700,
         "wires": [
             [
@@ -832,18 +961,13 @@
         ]
     },
     {
-        "id": "075b5d6a0510862e",
+        "id": "c2583dcebf246e13",
         "type": "function",
         "z": "90e51c80d7614276",
         "name": "+1 Pieza Negra Grande",
-        "func": "let pieza_elegida = \"Negra_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "func": "let pieza_elegida = \"⚫🔷 Pieza Negra Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
         "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
+        "x": 490,
         "y": 760,
         "wires": [
             [
@@ -852,18 +976,13 @@
         ]
     },
     {
-        "id": "43dec837112e2533",
+        "id": "74a67f19fc6b64b8",
         "type": "function",
         "z": "90e51c80d7614276",
         "name": "+1 Pieza Metal Pequeña",
-        "func": "let pieza_elegida = \"Metal_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "func": "let pieza_elegida = \"⚙️🔹 Pieza Metal Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
         "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
+        "x": 490,
         "y": 820,
         "wires": [
             [
@@ -872,18 +991,13 @@
         ]
     },
     {
-        "id": "38d322d6e18ef503",
+        "id": "8915a2a6f4e21c70",
         "type": "function",
         "z": "90e51c80d7614276",
         "name": "+1 Pieza Metal Grande",
-        "func": "let pieza_elegida = \"Metal_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
+        "func": "let pieza_elegida = \"⚙️🔷 Pieza Metal Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [pieza_elegida, usuario_actual, cantidad_puesta];\nmsg.payload = msg.params;\nreturn msg;",
         "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
+        "x": 490,
         "y": 880,
         "wires": [
             [
@@ -892,121 +1006,38 @@
         ]
     },
     {
-        "id": "f3058f885b15fa22",
-        "type": "ui_date_picker",
+        "id": "d78a7eac1ae9b956",
+        "type": "function",
         "z": "90e51c80d7614276",
-        "name": "Selector Fecha",
-        "label": "Día",
-        "group": "b0a7b1489b3fb67e",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "topic": "fecha",
-        "x": 270,
+        "name": "Estetica tabla + Calculo Total",
+        "func": "// 1. Calculamos la suma de todas las cantidades\nlet filas = msg.payload;\nlet sumaTotal = 0;\n\nif (Array.isArray(filas)) {\n    filas.forEach(fila => {\n        sumaTotal += parseInt(fila[\"Cantidad\"] || 0);\n    });\n\n    // 2. Añadimos la fila de TOTAL al final del array\n    filas.push({\n        \"Tipo de Pieza\": \"📊 TOTAL GENERAL\",\n        \"Cantidad\": sumaTotal\n    });\n}\n\n// 3. Configuramos las columnas (70% - 30%)\nmsg.columns = [\n    {\n        \"title\": \"TIPO DE PIEZA\",\n        \"field\": \"Tipo de Pieza\",\n        \"widthGrow\": 7,\n        \"hozAlign\": \"center\",\n        \"headerHozAlign\": \"center\"\n    },\n    {\n        \"title\": \"CANTIDAD\",\n        \"field\": \"Cantidad\",\n        \"widthGrow\": 3,\n        \"hozAlign\": \"center\",\n        \"headerHozAlign\": \"center\"\n    }\n];\n\nmsg.payload = filas;\nreturn msg;",
+        "outputs": 1,
+        "x": 1510,
         "y": 340,
         "wires": [
             [
-                "41bf10a3f79fb43e"
+                "0b63a93e4b941f64"
             ]
         ]
     },
     {
-        "id": "77781b2409e1abfb",
-        "type": "ui_dropdown",
-        "z": "90e51c80d7614276",
-        "name": "Selector Usuario",
-        "label": "Usuario",
-        "group": "b0a7b1489b3fb67e",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "options": [
-            {
-                "label": "Alvaro (AAS1)",
-                "value": "AAS1",
-                "type": "str"
-            },
-            {
-                "label": "Raul (RGR2)",
-                "value": "RGR2",
-                "type": "str"
-            },
-            {
-                "label": "Fabian (FHC3)",
-                "value": "FHC3",
-                "type": "str"
-            }
-        ],
-        "topic": "usuario",
-        "x": 280,
-        "y": 420,
-        "wires": [
-            [
-                "41bf10a3f79fb43e"
-            ]
-        ]
-    },
-    {
-        "id": "41bf10a3f79fb43e",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "Preparar Filtros",
-        "func": "// 1. Guardamos en el flujo lo que acaba de llegar\nif (msg.topic === \"fecha\") {\n    let d = new Date(msg.payload);\n    let fechaFormateada = d.toISOString().split('T')[0];\n    flow.set(\"filtro_fecha\", fechaFormateada);\n}\n\nif (msg.topic === \"usuario\") {\n    flow.set(\"filtro_usuario\", msg.payload);\n}\n\n// 2. Recuperamos ambos valores\nlet f = flow.get(\"filtro_fecha\");\nlet u = flow.get(\"filtro_usuario\");\n\n// 3. Solo disparamos si tenemos ambos datos\nif (f && u) {\n    msg.params = [f, u];\n    return msg;\n} else {\n    return null; // No hace nada hasta tener los dos\n}",
-        "outputs": 1,
-        "x": 530,
-        "y": 380,
-        "wires": [
-            [
-                "65b961a3233f3475"
-            ]
-        ]
-    },
-    {
-        "id": "65b961a3233f3475",
-        "type": "postgresql",
-        "z": "90e51c80d7614276",
-        "name": "Consultar Historial",
-        "query": "SELECT tipo_pieza, cantidad FROM registro_piezas WHERE fecha = $1 AND usuario = $2;",
-        "postgreSQLConfig": "e13779ceda0d5c8e",
-        "outputs": 1,
-        "x": 760,
-        "y": 380,
-        "wires": [
-            [
-                "b8d42f9e3307b5c9"
-            ]
-        ]
-    },
-    {
-        "id": "b8d42f9e3307b5c9",
-        "type": "ui_table",
+        "id": "a5d52c31192f9fe9",
+        "type": "ui_template",
         "z": "90e51c80d7614276",
         "group": "78d0549c66d87ad5",
-        "name": "Tabla Resultados",
-        "order": 0,
+        "name": "CSS Tabla + Resaltar Total",
+        "order": 4,
         "width": 0,
         "height": 0,
-        "columns": [
-            {
-                "field": "tipo_pieza",
-                "title": "Pieza",
-                "width": "",
-                "align": "left",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "cantidad",
-                "title": "Cantidad Total",
-                "width": "",
-                "align": "center",
-                "formatter": "plaintext"
-            }
-        ],
-        "outputs": 0,
-        "x": 990,
-        "y": 380,
-        "wires": []
+        "format": "<style>\n    /* 1. Cabecera NEGRA */\n    .tabulator-header, .tabulator-col {\n        background-color: #000000 !important;\n        color: #ffffff !important;\n    }\n\n    .tabulator-col-title {\n        font-size: 24px !important;\n        font-weight: 900 !important;\n    }\n\n    /* 2. Celdas de datos */\n    .tabulator-cell {\n        font-size: 20px !important;\n        font-weight: bold !important;\n        text-align: center !important;\n        padding: 15px 0 !important;\n    }\n\n    /* 3. Estilo especial para la última fila (EL TOTAL) */\n    .tabulator-row:last-child {\n        background-color: #e3f2fd !important; /* Azul muy clarito */\n        border-top: 3px solid #000 !important; /* Línea gruesa divisoria */\n    }\n\n    .tabulator-row:last-child .tabulator-cell {\n        color: #000 !important;\n        font-size: 24px !important;\n        font-weight: 900 !important;\n    }\n\n    /* 4. Color azul para los números de cantidad normales */\n    .tabulator-cell[tabulator-field=\"Cantidad\"] {\n        color: #007bff !important;\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 1520,
+        "y": 400,
+        "wires": [
+            []
+        ]
     }
 ]

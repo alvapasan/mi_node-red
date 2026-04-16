@@ -9,6 +9,7 @@
   "dependencies": {
     "node-red": "latest",
     "node-red-dashboard": "latest",
+    "node-red-node-ui-table": "latest",
     "node-red-contrib-postgresql": "latest",
     "node-red-contrib-s7": "latest",
     "node-red-contrib-modbus": "latest"

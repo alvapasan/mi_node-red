@@ -163,7 +163,7 @@
         "tab": "c37fd202a8722ef3",
         "order": 1,
         "disp": true,
-        "width": 8,
+        "width": 9,
         "collapse": false,
         "className": ""
     },
@@ -174,7 +174,7 @@
         "icon": "dashboard",
         "order": 2,
         "disabled": false,
-        "hidden": false
+        "hidden": true
     },
     {
         "id": "78d0549c66d87ad5",
@@ -265,27 +265,6 @@
         ]
     },
     {
-        "id": "647159e976bd0344",
-        "type": "ui_template",
-        "z": "f_login_ui",
-        "group": "",
-        "name": "Diseño DashBoard",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "format": "<style>\n    /* 1. CONFIGURACIÓN DE COLORES */\n    :root {\n        /* El azul clarito que antes era de cabecera, ahora es para el FONDO */\n        --color-fondo-pagina: #e3f2fd;\n\n        /* Un azul más intenso para la CABECERA */\n        --color-azul-cabecera-fuerte: #bbdefb;\n\n        /* Azul oscuro para textos de contraste */\n        --color-azul-oscuro-texto: #0d47a1;\n\n        --color-blanco-puro: #ffffff;\n        --color-bordes: #90caf9;\n    }\n\n    /* 2. FONDO GENERAL DE LA PÁGINA */\n    /* Aplicamos el azul clarito al contenedor principal */\n    .nr-dashboard-theme md-content {\n        background-color: var(--color-fondo-pagina) !important;\n    }\n\n    /* 3. ENCABEZADO (TOOLBAR) - AZUL MÁS OSCURITO */\n    body.nr-dashboard-theme md-toolbar {\n        background-color: var(--color-azul-cabecera-fuerte) !important;\n        color: var(--color-azul-oscuro-texto) !important;\n        border-bottom: 1px solid var(--color-bordes) !important;\n        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;\n    }\n\n    body.nr-dashboard-theme md-toolbar .md-toolbar-tools {\n        color: var(--color-azul-oscuro-texto) !important;\n        font-weight: bold !important;\n    }\n\n    /* Iconos de la cabecera */\n    body.nr-dashboard-theme md-toolbar .md-button md-icon {\n        color: var(--color-azul-oscuro-texto) !important;\n    }\n\n    /* 4. TARJETAS DE GRUPOS */\n    /* Mantenemos las tarjetas blancas para que \"floten\" sobre el fondo azul */\n    .nr-dashboard-theme ui-card-panel {\n        background-color: var(--color-blanco-puro) !important;\n        border: 1px solid var(--color-bordes) !important;\n        border-radius: 8px !important;\n        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;\n        margin: 12px !important;\n    }\n\n    /* Títulos de los grupos */\n    .nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {\n        color: var(--color-azul-oscuro-texto) !important;\n        font-weight: 800 !important;\n        border-bottom: 2px solid var(--color-fondo-pagina) !important;\n        padding-bottom: 10px !important;\n        text-transform: uppercase;\n    }\n\n    /* 5. TABLA (Haciendo juego con los nuevos azules) */\n    .tabulator-header {\n        background-color: var(--color-azul-cabecera-fuerte) !important;\n        color: var(--color-azul-oscuro-texto) !important;\n        border-bottom: 2px solid var(--color-bordes) !important;\n    }\n\n    /* Ajuste de inputs para que no se pierdan */\n    .nr-dashboard-theme md-input-container input {\n        background-color: var(--color-blanco-puro) !important;\n        border: 1px solid var(--color-bordes) !important;\n    }\n</style>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "global",
-        "className": "",
-        "x": 230,
-        "y": 620,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "f_carga",
         "type": "inject",
         "z": "f_login_ui",
@@ -343,10 +322,18 @@
         "z": "f_login_ui",
         "name": "Selector",
         "label": "Usuarios",
+        "tooltip": "",
+        "place": "",
         "group": "0ed1ee85ed6b6020",
         "order": 1,
+        "width": 8,
+        "height": 1,
         "passthru": true,
+        "multiple": false,
         "options": [],
+        "topic": "",
+        "topicType": "str",
+        "className": "",
         "x": 1070,
         "y": 200,
         "wires": [
@@ -403,9 +390,10 @@
         "z": "f_login_ui",
         "group": "0ed1ee85ed6b6020",
         "name": "Popup Pass",
-        "width": "",
-        "height": "",
-        "format": "<div ng-init=\"init()\" ng-show=\"showModal\">\n    <div style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; \n                background-color: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 9999;\">\n\n        <div style=\"background: #000000; padding: 30px; border-radius: 10px; text-align: center; width: 320px; \n                    border: 1px solid #367cff; box-shadow: 0 0 20px rgba(54, 124, 255, 0.4);\">\n\n            <div style=\"color: #5994ff; font-family: sans-serif; font-weight: bold; font-size: 22px; margin-bottom: 5px;\">\n                🔐 ACCESO\n            </div>\n\n            <div style=\"color: #5994ff; font-family: sans-serif; font-size: 11px; margin-bottom: 20px; letter-spacing: 2px; opacity: 0.8;\">\n                PASSWORD REQUIRED\n            </div>\n\n            <input\n                id=\"passInput\"\n                type=\"password\"\n                ng-model=\"pass\"\n                ng-keyup=\"$event.keyCode === 13 && enviar()\"\n                style=\"width: 100%; box-sizing: border-box; padding: 12px;\n                       background-color: #000000; border: 1px solid #367cff; color: #ffffff; border-radius: 4px;\n                       outline: none; font-size: 18px; text-align: center;\"\n                autocomplete=\"off\"\n            />\n\n            <br><br>\n\n            <div style=\"display: flex; justify-content: space-between; gap: 15px;\">\n                <button\n                    style=\"flex: 1; padding: 12px; background-color: #367cff; color: #ffffff; border: none; border-radius: 4px; \n                           cursor: pointer; font-weight: bold; text-transform: uppercase;\"\n                    ng-click=\"enviar()\">Entrar</button>\n\n                <button\n                    style=\"flex: 1; padding: 12px; background-color: #000000; color: #ffffff; border: 1px solid #367cff; \n                           border-radius: 4px; cursor: pointer; font-weight: bold;\"\n                    ng-click=\"cerrar()\">Salir</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<script>\n(function(scope) {\n    scope.showModal = false;\n\n    scope.init = function() {\n        // Escuchamos msg.payload.action en lugar de solo msg.payload\n        scope.$watch('msg.payload', function(data) {\n            if (data && data.action === 'open') {\n                scope.pass = ''; // Limpiamos cuadro\n                scope.showModal = true;\n                \n                // Forzamos el refresco visual\n                setTimeout(() => {\n                    const input = document.getElementById('passInput');\n                    if (input) { input.focus(); }\n                }, 150);\n            }\n        });\n    };\n\n    scope.enviar = function() {\n        scope.send({payload: scope.pass});\n        scope.showModal = false;\n    };\n\n    scope.cerrar = function() {\n        scope.showModal = false;\n    };\n})(scope);\n</script>",
+        "order": 2,
+        "width": 1,
+        "height": 1,
+        "format": "<div ng-init=\"init()\" ng-show=\"showModal\">\n    <div\n        style=\"position: fixed; top: 0; left: 0; width: 100%; height: 100%; \n                background-color: rgba(15, 23, 42, 0.9); display: flex; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(4px);\">\n\n        <div style=\"background: #1e293b; padding: 30px; border-radius: 10px; text-align: center; width: 320px; \n                    border: 1px solid #0284c7; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);\">\n\n            <div\n                style=\"color: #ffffff; font-family: 'Segoe UI', sans-serif; font-weight: 900; font-size: 22px; margin-bottom: 5px; text-transform: uppercase;\">\n                🔐 ACCESO\n            </div>\n\n            <div\n                style=\"color: #94a3b8; font-family: 'Segoe UI', sans-serif; font-size: 11px; margin-bottom: 20px; letter-spacing: 2px; font-weight: bold;\">\n                PASSWORD REQUIRED\n            </div>\n\n            <input\n                id=\"passInput\"\n                type=\"password\"\n                ng-model=\"pass\"\n                ng-keyup=\"$event.keyCode === 13 && enviar()\"\n                style=\"width: 100%; box-sizing: border-box; padding: 12px;\n                       background-color: #0f172a; border: 1px solid #94a3b8; color: #ffffff; border-radius: 6px;\n                       outline: none; font-size: 18px; text-align: center; font-weight: bold; letter-spacing: 3px;\"\n                autocomplete=\"off\"\n            />\n\n            <br><br>\n\n            <div style=\"display: flex; justify-content: space-between; gap: 15px;\">\n                <button\n                    style=\"flex: 1; padding: 12px; background-color: #0284c7; color: #ffffff; border: none; border-radius: 6px; \n                           cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.2s;\"\n                    onmouseover=\"this.style.backgroundColor='#0369a1'\" onmouseout=\"this.style.backgroundColor='#0284c7'\"\n                    ng-click=\"enviar()\">Entrar</button>\n\n                <button\n                    style=\"flex: 1; padding: 12px; background-color: transparent; color: #94a3b8; border: 1px solid #94a3b8; \n                           border-radius: 6px; cursor: pointer; font-weight: bold; text-transform: uppercase; transition: 0.2s;\"\n                    onmouseover=\"this.style.color='#ffffff'; this.style.borderColor='#ffffff'\" onmouseout=\"this.style.color='#94a3b8'; this.style.borderColor='#94a3b8'\"\n                    ng-click=\"cerrar()\">Salir</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<script>\n    (function(scope) {\n        scope.showModal = false;\n\n        scope.init = function() {\n            scope.$watch('msg', function(msg) {\n                if (msg && msg.payload && msg.payload.action === 'open') {\n                    scope.pass = ''; \n                    scope.showModal = true;\n                    setTimeout(() => {\n                        const input = document.getElementById('passInput');\n                        if (input) { input.focus(); }\n                    }, 150);\n                }\n            });\n        };\n\n        scope.enviar = function() {\n            scope.send({payload: scope.pass});\n            scope.showModal = false;\n        };\n\n        scope.cerrar = function() {\n            scope.showModal = false;\n        };\n    })(scope);\n</script>",
         "storeOutMessages": true,
         "fwdInMessages": false,
         "resendOnRefresh": false,
@@ -601,6 +589,27 @@
         "wires": []
     },
     {
+        "id": "1911e58f684b625a",
+        "type": "ui_template",
+        "z": "f_login_ui",
+        "group": "",
+        "name": "Diseño DashBoard",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    /* =========================================\n       ESTILO PROFESIONAL - SLATE MEDIO, SIN CAJAS BLANCAS\n       ========================================= */\n\n    :root {\n        --bg-oscuro: #1e293b;\n        --bg-tarjeta: #cbd5e1;\n        --azul-corporativo: #0f172a;\n        --acento-primario: #0284c7;\n        --acento-hover: #0369a1;\n        --texto-principal: #1e293b;\n        --bordes: #94a3b8;\n        --fondo-input: #94a3b8;\n        /* Gris más oscuro para el desplegable en vez de blanco */\n    }\n\n    /* 1. FONDO Y CABECERA */\n    .nr-dashboard-theme md-content {\n        background-color: var(--bg-oscuro) !important;\n    }\n\n    body.nr-dashboard-theme md-toolbar {\n        background-color: var(--azul-corporativo) !important;\n        border-bottom: 2px solid var(--acento-primario) !important;\n    }\n\n    body.nr-dashboard-theme md-toolbar .md-toolbar-tools {\n        color: #ffffff !important;\n        font-weight: bold !important;\n        text-transform: uppercase;\n        letter-spacing: 1px;\n    }\n\n    /* 2. TARJETAS (GRUPOS) */\n    .nr-dashboard-theme ui-card-panel {\n        background-color: var(--bg-tarjeta) !important;\n        border-radius: 8px !important;\n        margin: 15px !important;\n        padding: 0 !important;\n        box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.4) !important;\n        border: 1px solid var(--bordes) !important;\n    }\n\n    /* 3. TÍTULOS DE LOS GRUPOS (LOGIN, ETC) */\n    .nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {\n        background-color: var(--bordes) !important;\n        color: var(--azul-corporativo) !important;\n        font-weight: 900 !important;\n        margin: 0 !important;\n        padding: 18px !important;\n        border-radius: 8px 8px 0 0 !important;\n        border-bottom: 1px solid var(--azul-corporativo) !important;\n        font-size: 22px !important;\n        text-transform: uppercase;\n        letter-spacing: 1px !important;\n    }\n\n    /* 4. BOTONES FULL-WIDTH */\n    .nr-dashboard-theme md-button {\n        background-color: var(--acento-primario) !important;\n        color: #ffffff !important;\n        font-size: 16px !important;\n        font-weight: 700 !important;\n        letter-spacing: 0.5px !important;\n        width: 100% !important;\n        height: 100% !important;\n        margin: 0 !important;\n        border-radius: 4px !important;\n        border: none !important;\n        box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.2) !important;\n        transition: all 0.2s ease-in-out !important;\n    }\n\n    .nr-dashboard-theme md-button:hover {\n        background-color: var(--acento-hover) !important;\n        transform: translateY(1px) !important;\n        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;\n    }\n\n    /* ========================================================\n       5. DESTRUCTOR DE CAJAS BLANCAS (INPUTS Y DROPDOWNS)\n       ======================================================== */\n\n    /* Elimina el fondo blanco asqueroso de los contenedores de Node-RED */\n    .nr-dashboard-theme md-list-item,\n    .nr-dashboard-theme .nr-dashboard-dropdown,\n    .nr-dashboard-theme .nr-dashboard-textinput,\n    .nr-dashboard-theme .layout-row {\n        background-color: transparent !important;\n    }\n\n    /* Etiqueta de texto (ej. \"Usuarios\") */\n    .nr-dashboard-theme md-list-item p,\n    .nr-dashboard-theme md-list-item label {\n        color: var(--azul-corporativo) !important;\n        font-weight: 800 !important;\n        font-size: 15px !important;\n    }\n\n    /* Contenedor invisible del input */\n    .nr-dashboard-theme md-input-container {\n        background-color: transparent !important;\n        padding: 0 !important;\n        margin: 5px 12px !important;\n    }\n\n    /* 6. DISEÑO DE LA CAJA DEL DESPLEGABLE Y TEXTO (YA NO ES BLANCA) */\n    .nr-dashboard-theme md-input-container>input,\n    .nr-dashboard-theme md-select {\n        background-color: var(--fondo-input) !important;\n        /* Ahora es gris oscuro, no blanco */\n        border: 1px solid var(--azul-corporativo) !important;\n        /* Borde bien definido */\n        border-radius: 6px !important;\n        color: var(--azul-corporativo) !important;\n        /* Letra azul oscuro */\n        font-weight: bold !important;\n        padding: 8px 12px !important;\n        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;\n        margin: 0 !important;\n        height: auto !important;\n    }\n\n    /* Color de la flechita del desplegable para que se vea bien */\n    .nr-dashboard-theme md-select .md-select-icon {\n        color: var(--azul-corporativo) !important;\n    }\n\n    /* Eliminar la línea negra de debajo del texto en los menús desplegables */\n    .nr-dashboard-theme md-select .md-select-value {\n        border-bottom: none !important;\n        padding: 4px 0 !important;\n    }\n\n    /* Eliminar las animaciones de líneas raras de Material Design */\n    .nr-dashboard-theme md-input-container::before,\n    .nr-dashboard-theme md-input-container::after {\n        display: none !important;\n    }\n\n    /* Eliminar el margen en blanco inferior reservado para errores */\n    .nr-dashboard-theme md-input-container .md-errors-spacer {\n        display: none !important;\n    }\n    /* ========================================================\n       7. ELIMINAR CUADRADOS BLANCOS DE LOS TEMPLATES\n       ======================================================== */\n    .nr-dashboard-theme .nr-dashboard-template {\n        background-color: transparent !important;\n        border: none !important;\n        box-shadow: none !important;\n        padding: 0 !important;\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "global",
+        "className": "",
+        "x": 250,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "1c8102a8f87c5561",
         "type": "link in",
         "z": "90e51c80d7614276",
@@ -644,196 +653,6 @@
         "events": "all",
         "x": 620,
         "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "8655584731f85d32",
-        "type": "inject",
-        "z": "90e51c80d7614276",
-        "name": "Pieza 1",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 230,
-        "y": 500,
-        "wires": [
-            [
-                "f6b2e2edc4623958"
-            ]
-        ]
-    },
-    {
-        "id": "a5d2ce873017674e",
-        "type": "inject",
-        "z": "90e51c80d7614276",
-        "name": "Pieza 2",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 230,
-        "y": 680,
-        "wires": [
-            [
-                "22ca4d7f6eea07cc"
-            ]
-        ]
-    },
-    {
-        "id": "e8a19a780b76191e",
-        "type": "inject",
-        "z": "90e51c80d7614276",
-        "name": "Pieza 3",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 230,
-        "y": 820,
-        "wires": [
-            [
-                "1c31fcfe2cd77490"
-            ]
-        ]
-    },
-    {
-        "id": "afec4364e16258e5",
-        "type": "inject",
-        "z": "90e51c80d7614276",
-        "name": "Pieza 4",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 210,
-        "y": 960,
-        "wires": [
-            [
-                "4c9a8ebe4c03e126"
-            ]
-        ]
-    },
-    {
-        "id": "08af7ff3336c2783",
-        "type": "inject",
-        "z": "90e51c80d7614276",
-        "name": "Pieza 5",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 210,
-        "y": 1120,
-        "wires": [
-            [
-                "16537ba3b1ed93de"
-            ]
-        ]
-    },
-    {
-        "id": "d4db77e73b260663",
-        "type": "inject",
-        "z": "90e51c80d7614276",
-        "name": "Pieza 6",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 210,
-        "y": 1240,
-        "wires": [
-            [
-                "e9473a22d2a33b47"
-            ]
-        ]
-    },
-    {
-        "id": "5daf76d322df86ae",
-        "type": "postgresql",
-        "z": "90e51c80d7614276",
-        "name": "SQL DB",
-        "query": "INSERT INTO registro_piezas (tipo_pieza, usuario, fecha, cantidad)\nVALUES ($1, $2, CURRENT_DATE, $3)\nON CONFLICT (tipo_pieza, usuario, fecha)\nDO UPDATE SET cantidad = registro_piezas.cantidad + EXCLUDED.cantidad;",
-        "postgreSQLConfig": "e13779ceda0d5c8e",
-        "split": false,
-        "rowsPerMsg": "",
-        "outputs": 1,
-        "x": 820,
-        "y": 960,
         "wires": [
             []
         ]
@@ -1135,228 +954,6 @@
             [
                 "956e363404502256",
                 "08c75444d73b82d5"
-            ]
-        ]
-    },
-    {
-        "id": "b083d99b216cbfd2",
-        "type": "s7 in",
-        "z": "90e51c80d7614276",
-        "endpoint": "s7_db12_config",
-        "mode": "single",
-        "variable": "PiezaBlancaPequeña",
-        "diff": true,
-        "name": "DB12,X94.2 Blanca Pequeña",
-        "x": 180,
-        "y": 600,
-        "wires": [
-            [
-                "f6b2e2edc4623958"
-            ]
-        ]
-    },
-    {
-        "id": "fdd83d42dd5b2d95",
-        "type": "s7 in",
-        "z": "90e51c80d7614276",
-        "endpoint": "s7_db12_config",
-        "mode": "single",
-        "variable": "PiezaBlancaGrande",
-        "diff": true,
-        "name": "DB12,X94.3 Blanca Grande",
-        "x": 200,
-        "y": 760,
-        "wires": [
-            [
-                "22ca4d7f6eea07cc"
-            ]
-        ]
-    },
-    {
-        "id": "45f27eb06f715c3f",
-        "type": "s7 in",
-        "z": "90e51c80d7614276",
-        "endpoint": "s7_db12_config",
-        "mode": "single",
-        "variable": "PiezaNegraPequeña",
-        "diff": true,
-        "name": "DB12,X94.4 Negra Pequeña",
-        "x": 180,
-        "y": 900,
-        "wires": [
-            [
-                "1c31fcfe2cd77490"
-            ]
-        ]
-    },
-    {
-        "id": "5e7b9eb4973a7b45",
-        "type": "s7 in",
-        "z": "90e51c80d7614276",
-        "endpoint": "s7_db12_config",
-        "mode": "single",
-        "variable": "PiezaNegraGrande",
-        "diff": true,
-        "name": "DB12,X94.5 Negra Grande",
-        "x": 190,
-        "y": 1020,
-        "wires": [
-            [
-                "4c9a8ebe4c03e126"
-            ]
-        ]
-    },
-    {
-        "id": "df392b0194a4234b",
-        "type": "s7 in",
-        "z": "90e51c80d7614276",
-        "endpoint": "s7_db12_config",
-        "mode": "single",
-        "variable": "PiezaMetalPequeña",
-        "diff": true,
-        "name": "DB12,X94.6 Metal Pequeña",
-        "x": 200,
-        "y": 1180,
-        "wires": [
-            [
-                "16537ba3b1ed93de"
-            ]
-        ]
-    },
-    {
-        "id": "90a3687327cb415d",
-        "type": "s7 in",
-        "z": "90e51c80d7614276",
-        "endpoint": "s7_db12_config",
-        "mode": "single",
-        "variable": "PiezaMetalGrande",
-        "diff": true,
-        "name": "DB12,X94.7 Metal Grande",
-        "x": 210,
-        "y": 1320,
-        "wires": [
-            [
-                "e9473a22d2a33b47"
-            ]
-        ]
-    },
-    {
-        "id": "f6b2e2edc4623958",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Blanca Pequeña",
-        "func": "let pieza_elegida = \"Blanca_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 510,
-        "y": 600,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "22ca4d7f6eea07cc",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Blanca Grande",
-        "func": "let pieza_elegida = \"Blanca_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 530,
-        "y": 760,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "1c31fcfe2cd77490",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Negra Pequeña",
-        "func": "let pieza_elegida = \"Negra_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 530,
-        "y": 900,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "4c9a8ebe4c03e126",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Negra Grande",
-        "func": "let pieza_elegida = \"Negra_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 530,
-        "y": 1020,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "16537ba3b1ed93de",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Metal Pequeña",
-        "func": "let pieza_elegida = \"Metal_Pequeña\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 550,
-        "y": 1180,
-        "wires": [
-            [
-                "5daf76d322df86ae"
-            ]
-        ]
-    },
-    {
-        "id": "e9473a22d2a33b47",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "+1 Pieza Metal Grande",
-        "func": "let pieza_elegida = \"Metal_Grande\"; \nlet cantidad_puesta = 1;\nlet usuario_actual = global.get(\"usuario_activo\") || \"Desconocido\";\n\nmsg.params = [\n    pieza_elegida,\n    usuario_actual,\n    cantidad_puesta\n];\nmsg.payload = msg.params;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 550,
-        "y": 1320,
-        "wires": [
-            [
-                "5daf76d322df86ae"
             ]
         ]
     }

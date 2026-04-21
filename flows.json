@@ -192,30 +192,20 @@
         "type": "ui_group",
         "name": "FOTO",
         "tab": "ea9fead6d8a3fa81",
-        "order": 3,
+        "order": 2,
         "disp": false,
         "width": "6",
         "collapse": false,
         "className": ""
     },
     {
-        "id": "ui_group_imagen",
-        "type": "ui_group",
-        "name": "IMAGEN SIN MÁRGENES",
-        "tab": "",
-        "order": 1,
-        "disp": true,
-        "width": "16",
-        "collapse": false
-    },
-    {
         "id": "a85144b6feefd47f",
         "type": "ui_group",
         "name": "Grafica",
         "tab": "ea9fead6d8a3fa81",
-        "order": 2,
+        "order": 4,
         "disp": true,
-        "width": "6",
+        "width": "8",
         "collapse": false,
         "className": ""
     },
@@ -263,6 +253,17 @@
                 "name": "PiezaMetalGrande"
             }
         ]
+    },
+    {
+        "id": "ee1163f41d4b1728",
+        "type": "ui_group",
+        "name": "OUT",
+        "tab": "ea9fead6d8a3fa81",
+        "order": 3,
+        "disp": false,
+        "width": "2",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "f_carga",
@@ -603,10 +604,58 @@
         "resendOnRefresh": true,
         "templateScope": "global",
         "className": "",
-        "x": 250,
-        "y": 680,
+        "x": 150,
+        "y": 40,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "32d68f3425d908c7",
+        "type": "ui_ui_control",
+        "z": "f_login_ui",
+        "name": "",
+        "events": "all",
+        "x": 600,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "77f4b96188a9a379",
+        "type": "link in",
+        "z": "f_login_ui",
+        "name": "link in 9",
+        "links": [
+            "7ff50e503b6b7544"
+        ],
+        "x": 205,
+        "y": 840,
+        "wires": [
+            [
+                "565011bd0fcacb6a"
+            ]
+        ]
+    },
+    {
+        "id": "565011bd0fcacb6a",
+        "type": "function",
+        "z": "f_login_ui",
+        "name": "Cerrar sesion",
+        "func": "// El payload debe ser exactamente el nombre de la pestaña (Tab) de destino\nmsg.payload = \"Inicio\";\n\n// También puedes usar el índice (empezando desde 0)\n// msg.payload = 0; // Esto iría a la primera pestaña\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 840,
+        "wires": [
+            [
+                "32d68f3425d908c7"
+            ]
         ]
     },
     {
@@ -814,7 +863,7 @@
         "name": "Gráfica Pie",
         "group": "a85144b6feefd47f",
         "order": 1,
-        "width": 6,
+        "width": "8",
         "height": 5,
         "label": "Reparto de Producción",
         "chartType": "pie",
@@ -843,6 +892,8 @@
             "#c5b0d5"
         ],
         "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
         "x": 1830,
         "y": 480,
         "wires": [
@@ -954,6 +1005,42 @@
             [
                 "956e363404502256",
                 "08c75444d73b82d5"
+            ]
+        ]
+    },
+    {
+        "id": "7ff50e503b6b7544",
+        "type": "link out",
+        "z": "90e51c80d7614276",
+        "name": "link out 8",
+        "mode": "link",
+        "links": [
+            "77f4b96188a9a379"
+        ],
+        "x": 2035,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "2547b58a7f57d47e",
+        "type": "ui_template",
+        "z": "90e51c80d7614276",
+        "group": "ee1163f41d4b1728",
+        "name": "Sign-Out",
+        "order": 1,
+        "width": 2,
+        "height": 2,
+        "format": "<!DOCTYPE html>\n<html>\n    <head>\n    <link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.12.1/css/all.css\" crossorigin=\"anonymous\">\n       <style>\n.buttonsignout {background-color:#D32222; \n         border:3px solid #940F0F; \n         color:white; \n         padding:15px32px; \n         text-align:center; \n         text-decoration:none; \n         display:inline-block; \n         font-size:16px;  \n         margin:4px2px; \n         cursor:pointer; \n         font-size:15px; \n         height:100px;\n         border-radius: 8px;\n}\n.buttonsignout i {\n    font-size: 40px;\n}\n.buttonsignout:hover {\n    background-color: #940F0F;\n}\n.buttonsignout:active {\n  background-color: #940F0F;\n  transform: translateY(4px);\n}\n        </style> \n    </head>\n<body>\n\n<button class=\"buttonsignout\" ng-click=\"send({payload: {tab: '🔐 LOGIN'}})\">\n    <i class=\"fas fa-power-off\"></i> </button>\n\n</body>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1870,
+        "y": 140,
+        "wires": [
+            [
+                "7ff50e503b6b7544"
             ]
         ]
     }

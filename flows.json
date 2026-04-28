@@ -746,8 +746,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 770,
-        "y": 120,
+        "x": 1280,
+        "y": 140,
         "wires": [
             []
         ]
@@ -769,8 +769,8 @@
         "topic": "",
         "payload": "https://www.edsolab.com/wp-content/uploads/2022/12/FMS-205_SE_I4.0-300x300.jpg",
         "payloadType": "str",
-        "x": 540,
-        "y": 120,
+        "x": 1050,
+        "y": 140,
         "wires": [
             [
                 "66aef3fa64828928"
@@ -969,8 +969,8 @@
         "links": [
             "77f4b96188a9a379"
         ],
-        "x": 1525,
-        "y": 120,
+        "x": 2035,
+        "y": 140,
         "wires": []
     },
     {
@@ -988,12 +988,60 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1360,
-        "y": 120,
+        "x": 1870,
+        "y": 140,
         "wires": [
             [
                 "7ff50e503b6b7544"
             ]
+        ]
+    },
+    {
+        "id": "1c8102a8f87c5561",
+        "type": "link in",
+        "z": "90e51c80d7614276",
+        "name": "link in 2",
+        "links": [
+            "dccae7353c392b24"
+        ],
+        "x": 245,
+        "y": 160,
+        "wires": [
+            [
+                "a38b265e1ea88f89"
+            ]
+        ]
+    },
+    {
+        "id": "a38b265e1ea88f89",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Cambio de Pagina",
+        "func": "// El payload debe ser exactamente el nombre de la pestaña (Tab) de destino\nmsg.payload = \"Historial\";\n\n// También puedes usar el índice (empezando desde 0)\n// msg.payload = 0; // Esto iría a la primera pestaña\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "9e162e8cfc7bdd87"
+            ]
+        ]
+    },
+    {
+        "id": "9e162e8cfc7bdd87",
+        "type": "ui_ui_control",
+        "z": "90e51c80d7614276",
+        "name": "",
+        "events": "all",
+        "x": 620,
+        "y": 160,
+        "wires": [
+            []
         ]
     }
 ]

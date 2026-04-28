@@ -276,8 +276,8 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 450,
-        "y": 200,
+        "x": 490,
+        "y": 320,
         "wires": [
             [
                 "f_sql_nombres"
@@ -294,8 +294,8 @@
         "split": false,
         "rowsPerMsg": "",
         "outputs": 1,
-        "x": 680,
-        "y": 200,
+        "x": 720,
+        "y": 320,
         "wires": [
             [
                 "f_mapeo"
@@ -309,8 +309,8 @@
         "name": "Mapear Nombres",
         "func": "msg.options = [];\nfor (let i = 0; i < msg.payload.length; i++) {\n    msg.options[i] = msg.payload[i].nombre_completo;\n}\ndelete msg.payload;\nreturn msg;",
         "outputs": 1,
-        "x": 870,
-        "y": 200,
+        "x": 910,
+        "y": 320,
         "wires": [
             [
                 "f_dropdown"
@@ -335,8 +335,8 @@
         "topic": "",
         "topicType": "str",
         "className": "",
-        "x": 1070,
-        "y": 200,
+        "x": 1110,
+        "y": 320,
         "wires": [
             [
                 "f_guardar_nombre"
@@ -357,8 +357,8 @@
                 "tot": "msg"
             }
         ],
-        "x": 1270,
-        "y": 200,
+        "x": 1310,
+        "y": 320,
         "wires": [
             [
                 "f_lanzador"
@@ -377,8 +377,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1480,
-        "y": 200,
+        "x": 1520,
+        "y": 320,
         "wires": [
             [
                 "f_popup"
@@ -400,8 +400,8 @@
         "resendOnRefresh": false,
         "templateScope": "local",
         "className": "",
-        "x": 1670,
-        "y": 200,
+        "x": 1710,
+        "y": 320,
         "wires": [
             [
                 "6d78a1ca3ea65fa6"
@@ -422,8 +422,8 @@
         "raw": false,
         "topic": "ACCESO CONCEDIDO ✅",
         "name": "Aviso Éxito",
-        "x": 1370,
-        "y": 360,
+        "x": 1410,
+        "y": 480,
         "wires": []
     },
     {
@@ -440,8 +440,8 @@
         "raw": false,
         "topic": "PASSWORD INCORRECTA ❌",
         "name": "Aviso Error",
-        "x": 1370,
-        "y": 500,
+        "x": 1410,
+        "y": 620,
         "wires": []
     },
     {
@@ -456,8 +456,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 440,
+        "x": 440,
+        "y": 560,
         "wires": [
             [
                 "048ac884b6e17c82"
@@ -486,8 +486,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1140,
-        "y": 440,
+        "x": 1180,
+        "y": 560,
         "wires": [
             [
                 "22143d7bdeccf5a2",
@@ -509,8 +509,8 @@
         "split": false,
         "rowsPerMsg": "",
         "outputs": 1,
-        "x": 640,
-        "y": 440,
+        "x": 680,
+        "y": 560,
         "wires": [
             [
                 "357fe5a9bf87ebe9"
@@ -529,8 +529,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 900,
-        "y": 440,
+        "x": 940,
+        "y": 560,
         "wires": [
             [
                 "4e43db65bcf1a28f"
@@ -546,8 +546,8 @@
         "links": [
             "1c8102a8f87c5561"
         ],
-        "x": 1315,
-        "y": 400,
+        "x": 1355,
+        "y": 520,
         "wires": []
     },
     {
@@ -559,8 +559,8 @@
         "links": [
             "0790dcb710f4a4b2"
         ],
-        "x": 1315,
-        "y": 560,
+        "x": 1355,
+        "y": 680,
         "wires": []
     },
     {
@@ -571,8 +571,8 @@
         "links": [
             "fa7759554fbbaf1a"
         ],
-        "x": 1345,
-        "y": 120,
+        "x": 1385,
+        "y": 240,
         "wires": [
             [
                 "f_lanzador"
@@ -585,8 +585,8 @@
         "z": "f_login_ui",
         "name": "Inicio",
         "info": "",
-        "x": 210,
-        "y": 100,
+        "x": 250,
+        "y": 120,
         "wires": []
     },
     {
@@ -595,8 +595,8 @@
         "z": "f_login_ui",
         "name": "",
         "events": "all",
-        "x": 600,
-        "y": 840,
+        "x": 640,
+        "y": 960,
         "wires": [
             []
         ]
@@ -609,8 +609,8 @@
         "links": [
             "7ff50e503b6b7544"
         ],
-        "x": 205,
-        "y": 840,
+        "x": 245,
+        "y": 960,
         "wires": [
             [
                 "565011bd0fcacb6a"
@@ -629,8 +629,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 840,
+        "x": 440,
+        "y": 960,
         "wires": [
             [
                 "32d68f3425d908c7"
@@ -652,56 +652,8 @@
         "resendOnRefresh": true,
         "templateScope": "global",
         "className": "",
-        "x": 240,
-        "y": 40,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "1c8102a8f87c5561",
-        "type": "link in",
-        "z": "90e51c80d7614276",
-        "name": "link in 2",
-        "links": [
-            "dccae7353c392b24"
-        ],
-        "x": 245,
-        "y": 160,
-        "wires": [
-            [
-                "a38b265e1ea88f89"
-            ]
-        ]
-    },
-    {
-        "id": "a38b265e1ea88f89",
-        "type": "function",
-        "z": "90e51c80d7614276",
-        "name": "Cambio de Pagina",
-        "func": "// El payload debe ser exactamente el nombre de la pestaña (Tab) de destino\nmsg.payload = \"Historial\";\n\n// También puedes usar el índice (empezando desde 0)\n// msg.payload = 0; // Esto iría a la primera pestaña\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
-        "y": 160,
-        "wires": [
-            [
-                "9e162e8cfc7bdd87"
-            ]
-        ]
-    },
-    {
-        "id": "9e162e8cfc7bdd87",
-        "type": "ui_ui_control",
-        "z": "90e51c80d7614276",
-        "name": "",
-        "events": "all",
-        "x": 620,
-        "y": 160,
+        "x": 280,
+        "y": 80,
         "wires": [
             []
         ]
@@ -794,8 +746,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1280,
-        "y": 140,
+        "x": 770,
+        "y": 120,
         "wires": [
             []
         ]
@@ -817,8 +769,8 @@
         "topic": "",
         "payload": "https://www.edsolab.com/wp-content/uploads/2022/12/FMS-205_SE_I4.0-300x300.jpg",
         "payloadType": "str",
-        "x": 1050,
-        "y": 140,
+        "x": 540,
+        "y": 120,
         "wires": [
             [
                 "66aef3fa64828928"
@@ -1017,8 +969,8 @@
         "links": [
             "77f4b96188a9a379"
         ],
-        "x": 2035,
-        "y": 140,
+        "x": 1525,
+        "y": 120,
         "wires": []
     },
     {
@@ -1036,8 +988,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1870,
-        "y": 140,
+        "x": 1360,
+        "y": 120,
         "wires": [
             [
                 "7ff50e503b6b7544"

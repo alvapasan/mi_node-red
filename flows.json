@@ -18,25 +18,25 @@
         "id": "e13779ceda0d5c8e",
         "type": "postgreSQLConfig",
         "name": "",
-        "host": "hdb-4bxfwXyP.db.rocketadmin.com",
+        "host": "aws-0-eu-west-1.pooler.supabase.com",
         "hostFieldType": "str",
-        "port": 5432,
+        "port": "6543",
         "portFieldType": "num",
-        "database": "hdb_4bxfwXyP",
+        "database": "postgres",
         "databaseFieldType": "str",
         "ssl": "false",
         "sslFieldType": "bool",
         "applicationName": "",
         "applicationNameType": "str",
-        "max": 10,
+        "max": "1",
         "maxFieldType": "num",
         "idle": 1000,
         "idleFieldType": "num",
         "connectionTimeout": 10000,
         "connectionTimeoutFieldType": "num",
-        "user": "hdb_4bxfwXyP",
+        "user": "postgres.pncowyvloswgcudcufid",
         "userFieldType": "str",
-        "password": "SnFBpxwYXZRzQKA9XuU_L8Buny2GbH17",
+        "password": "Torrecaida.2",
         "passwordFieldType": "str"
     },
     {
@@ -174,7 +174,7 @@
         "icon": "dashboard",
         "order": 2,
         "disabled": false,
-        "hidden": true
+        "hidden": false
     },
     {
         "id": "78d0549c66d87ad5",
@@ -276,8 +276,8 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 490,
-        "y": 320,
+        "x": 470,
+        "y": 300,
         "wires": [
             [
                 "f_sql_nombres"

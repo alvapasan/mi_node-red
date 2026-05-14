@@ -174,7 +174,7 @@
         "icon": "dashboard",
         "order": 2,
         "disabled": false,
-        "hidden": false
+        "hidden": true
     },
     {
         "id": "78d0549c66d87ad5",
@@ -266,6 +266,61 @@
         "className": ""
     },
     {
+        "id": "config_5432_pooler",
+        "type": "postgreSQLConfig",
+        "name": "Supabase Session (5432)",
+        "host": "aws-0-eu-west-1.pooler.supabase.com",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "postgres",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "1",
+        "maxFieldType": "num",
+        "idle": 1000,
+        "idleFieldType": "num",
+        "connectionTimeout": 10000,
+        "connectionTimeoutFieldType": "num",
+        "user": "postgres.pncowyvloswgcudcufid",
+        "userFieldType": "str",
+        "password": "Torrecaida.2",
+        "passwordFieldType": "str"
+    },
+    {
+        "id": "275b364c8606403c",
+        "type": "ui_tab",
+        "name": "Chat IA",
+        "icon": "Chat IA",
+        "disabled": false,
+        "hidden": true
+    },
+    {
+        "id": "81a3b818e46c754e",
+        "type": "ui_group",
+        "name": "Chat IA",
+        "tab": "275b364c8606403c",
+        "order": 1,
+        "disp": true,
+        "width": 14,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e96bdbd8920c2f38",
+        "type": "ui_group",
+        "name": "Chat IA",
+        "tab": "ea9fead6d8a3fa81",
+        "order": 5,
+        "disp": false,
+        "width": "2",
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "f_carga",
         "type": "inject",
         "z": "f_login_ui",
@@ -276,8 +331,8 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 470,
-        "y": 300,
+        "x": 490,
+        "y": 320,
         "wires": [
             [
                 "f_sql_nombres"
@@ -544,7 +599,8 @@
         "name": "link out 1",
         "mode": "link",
         "links": [
-            "1c8102a8f87c5561"
+            "1c8102a8f87c5561",
+            "4617e4b37ac5683a"
         ],
         "x": 1355,
         "y": 520,
@@ -1042,6 +1098,253 @@
         "y": 160,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "3455ad78e6efa1a1",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Cambio de Pagina",
+        "func": "// El payload debe ser exactamente el nombre de la pestaña (Tab) de destino\nmsg.payload = \"Chat IA\";\n\n// También puedes usar el índice (empezando desde 0)\n// msg.payload = 0; // Esto iría a la primera pestaña\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1060,
+        "wires": [
+            [
+                "de01ce905e724124"
+            ]
+        ]
+    },
+    {
+        "id": "de01ce905e724124",
+        "type": "ui_ui_control",
+        "z": "90e51c80d7614276",
+        "name": "",
+        "events": "all",
+        "x": 700,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33654e5c79498366",
+        "type": "ui_button",
+        "z": "90e51c80d7614276",
+        "name": "",
+        "group": "78d0549c66d87ad5",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Chat ia",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 280,
+        "y": 1040,
+        "wires": [
+            [
+                "3455ad78e6efa1a1"
+            ]
+        ]
+    },
+    {
+        "id": "07a6c4e3b955ee9e",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Crear Prompt",
+        "func": "// 1. Capturamos el texto del usuario (En el Dashboard viene directo en msg.payload)\nconst userText = typeof msg.payload === \"string\" ? msg.payload : (msg.payload.content || \"\");\n\n// 2. Construimos la solicitud para la IA\nmsg.payload = {\n   messages: [\n      {\n         role: \"system\",\n         content: `Eres un experto en SQL. Tablas:\n1. 'registro_piezas' (tipo_pieza, usuario, fecha, cantidad)\n2. 'usuarios_login' (nombre_completo, usuario)\n\nREGLA DE ORO: Responde SIEMPRE con un JSON que tenga esta estructura unificada para poder combinar filtros:\n{\n  \"tipo\": \"...\", \n  \"parametros\": {\n    \"texto\": \"...\", \n    \"fecha_inicio\": \"...\", \n    \"fecha_fin\": \"...\"\n  },\n  \"respuesta\": \"...\"\n}\n\nTIPOS PERMITIDOS:\n- \"produccion_total\": Para sumar cantidades (cuántas, total, suma).\n- \"listar_usuarios\": Para ver el personal.\n- \"consulta\": Para buscar piezas, ver qué hizo un usuario, o filtrar por fechas.\n- \"chat\": Si el usuario te dice \"Hola\", \"Buenos días\" o charla contigo. Usa el campo \"respuesta\" para contestarle amablemente.\n\nREGLAS DE PARÁMETROS:\n- \"texto\": Pon el nombre del usuario (ej. AAS1), tipo de pieza (ej. Blanca), o déjalo vacío \"\".\n- \"fecha_inicio\" y \"fecha_fin\": Si piden fecha (ej. \"16/4/2026\", \"ayer\"), ponla en formato \"AAAA-MM-DD\". Si no, vacíos \"\".\n\nEjemplo \"Suma las piezas de AAS1 del 16 de abril\":\n{\"tipo\":\"produccion_total\", \"parametros\":{\"texto\":\"AAS1\", \"fecha_inicio\":\"2026-04-16\", \"fecha_fin\":\"2026-04-16\"}}\n\nEstamos en mayo de 2026. Responde SOLO JSON.`\n      },\n      { role: \"user\", content: userText }\n   ]\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 700,
+        "wires": [
+            [
+                "ccb4f32f912f518a"
+            ]
+        ]
+    },
+    {
+        "id": "ccb4f32f912f518a",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Construir request",
+        "func": "msg.payload = {\n    // CAMBIADO AL MODELO DE 70B\n    model: \"meta/llama-3.1-70b-instruct\",\n    messages: msg.payload.messages,\n    max_tokens: 1024,\n    temperature: 0.2,\n    top_p: 0.7,\n    stream: false\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 700,
+        "wires": [
+            [
+                "994d3fdcccb99d31"
+            ]
+        ]
+    },
+    {
+        "id": "994d3fdcccb99d31",
+        "type": "http request",
+        "z": "90e51c80d7614276",
+        "name": "NVIDIA API",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://integrate.api.nvidia.com/v1/chat/completions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Authorization",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": "Bearer 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"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": "application/json"
+            },
+            {
+                "keyType": "Accept",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 990,
+        "y": 700,
+        "wires": [
+            [
+                "f112142154a7b9d3"
+            ]
+        ]
+    },
+    {
+        "id": "f112142154a7b9d3",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Parse JSON",
+        "func": "// 1. Intentamos leer la respuesta de NVIDIA\nif (typeof msg.payload === \"string\") {\n    try { msg.payload = JSON.parse(msg.payload); } catch (e) { }\n}\n\n// 🚦 CONTROL DE ERRORES DE API (Por si la clave falla o caduca)\nif (msg.payload && msg.payload.detail) {\n    msg.payload = \"⚠️ <i>Error de la API de NVIDIA: \" + JSON.stringify(msg.payload.detail) + \"</i>\";\n    msg.origen = \"bot\";\n    return [msg, null]; // Lo mandamos al chat para que lo veas\n}\n\nlet content = msg.payload?.choices?.[0]?.message?.content;\n\n// 🚦 CONTROL DE CONTENIDO VACÍO\nif (!content) {\n    msg.payload = \"⚠️ <i>La IA no ha devuelto nada. Revisa tu API Key de NVIDIA o tu conexión.</i>\";\n    msg.origen = \"bot\";\n    return [msg, null];\n}\n\n// 2. CAZADOR DE JSON: Busca el formato correcto\nlet jsonMatch = content.match(/\\{[\\s\\S]*\\}/);\n\n// 🚦 CONTROL DE FORMATO INCORRECTO DE LA IA\nif (!jsonMatch) {\n    msg.payload = \"⚠️ <i>La IA se ha liado y no ha usado el formato JSON. Ha dicho esto:</i><br>\" + content;\n    msg.origen = \"bot\";\n    return [msg, null];\n}\n\nlet parsed;\ntry {\n    parsed = JSON.parse(jsonMatch[0]);\n} catch (err) {\n    msg.payload = \"⚠️ <i>La IA ha devuelto un JSON roto o mal escrito y no puedo leerlo.</i>\";\n    msg.origen = \"bot\";\n    return [msg, null];\n}\n\nmsg.payload = parsed;\nconst tipoDecidido = (parsed.tipo || \"\").toLowerCase();\n\n// 3. EL SEMÁFORO (Separar chat de consultas)\n// Salida 1 (Arriba): Es solo un saludo o charla, respondemos al Dashboard\nif (tipoDecidido === \"chat\") {\n    msg.payload = parsed.respuesta || \"¡Hola! ¿En qué te puedo ayudar?\";\n    msg.origen = \"bot\"; // <--- AVISAMOS DE QUE ES LA IA QUIEN HABLA\n    return [msg, null];\n}\n\n// Salida 2 (Abajo): Es una consulta real, lo mandamos al motor SQL\nreturn [null, msg];",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 700,
+        "wires": [
+            [
+                "6c66db7d76055c65"
+            ],
+            [
+                "4704cd11309ca1d2"
+            ]
+        ]
+    },
+    {
+        "id": "4704cd11309ca1d2",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "🔒 Construir SQL DB",
+        "func": "// 1. Extraemos los parámetros y el tipo de consulta que nos manda la IA\nconst p = msg.payload?.parametros || {};\nconst tipo = (msg.payload?.tipo || \"consulta\").toLowerCase();\n\n// Cubrimos por si la IA pone los datos fuera o dentro de 'parametros'\nlet busqueda = (p.texto || \"\").trim();\nlet ini = p.fecha_inicio || msg.payload?.fecha_inicio || \"\";\nlet fin = p.fecha_fin || msg.payload?.fecha_fin || \"\";\n\nlet queryStr = \"\";\n\n// 2. CONSTRUCCIÓN DINÁMICA DE FILTROS (Se combinan a la perfección)\nlet filtros = [\"1=1\"]; // Esto asegura que la consulta nunca se rompa\nif (busqueda !== \"\" && busqueda !== \"null\") {\n    filtros.push(`(tipo_pieza ILIKE '%${busqueda}%' OR usuario ILIKE '%${busqueda}%')`);\n}\nif (ini !== \"\" && fin !== \"\" && ini !== \"null\") {\n    filtros.push(`fecha::DATE BETWEEN '${ini}'::DATE AND '${fin}'::DATE`);\n}\nlet whereSQL = \"WHERE \" + filtros.join(\" AND \");\n\n// 3. GENERACIÓN DE LA CONSULTA SQL\nif (tipo === \"listar_usuarios\") {\n    // Lista segura con la columna correcta\n    queryStr = `SELECT nombre_completo, usuario, 'USUARIO_LIST' as meta_tipo FROM public.usuarios_login ORDER BY nombre_completo ASC;`;\n}\nelse if (tipo === \"produccion_total\") {\n    // Suma matemática APLICANDO los filtros combinados\n    queryStr = `SELECT 'SUMA_CANTIDAD' as meta_tipo, COALESCE(SUM(cantidad), 0) as total_resultado FROM public.registro_piezas ${whereSQL};`;\n}\nelse {\n    // Mostrar registros APLICANDO los filtros combinados\n    queryStr = `SELECT *, 'REGISTRO_PIEZA' as meta_tipo FROM public.registro_piezas ${whereSQL} ORDER BY fecha DESC LIMIT 10;`;\n}\n\n// Mandamos la consulta al nodo de PostgreSQL\nmsg.query = queryStr;\n// Mandamos esto al debug para que tú puedas leer qué SQL se ha generado\nmsg.payload = { SQL_Generado: queryStr };\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 840,
+        "wires": [
+            [
+                "08eda7ca90367ec5"
+            ]
+        ]
+    },
+    {
+        "id": "08eda7ca90367ec5",
+        "type": "postgresql",
+        "z": "90e51c80d7614276",
+        "name": "SQL DB",
+        "query": "",
+        "postgreSQLConfig": "config_5432_pooler",
+        "split": false,
+        "rowsPerMsg": "",
+        "outputs": 1,
+        "x": 1000,
+        "y": 840,
+        "wires": [
+            [
+                "8eee96e24539218f"
+            ]
+        ]
+    },
+    {
+        "id": "8eee96e24539218f",
+        "type": "function",
+        "z": "90e51c80d7614276",
+        "name": "Formatear a HTML",
+        "func": "const filas = msg.payload;\n\n// 1. Control de errores\nif (!filas || !Array.isArray(filas) || filas.length === 0) {\n    msg.payload = \"<i>No hay datos que coincidan con esos filtros. 📭</i>\";\n    msg.origen = \"bot\"; // <--- AVISAMOS DE QUE ES LA IA\n    return msg;\n}\n\nlet html = \"\";\nconst tipoDato = filas[0].meta_tipo;\n\n// CASO 1: ES LA SUMA TOTAL\nif (tipoDato === 'SUMA_CANTIDAD') {\n    html = `<div style=\"text-align: center; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa;\">\n                <h4 style=\"margin:0; color:#555;\">📊 Total Producción</h4>\n                <h1 style=\"color: #00a884; margin: 10px 0; font-size: 32px;\">${filas[0].total_resultado}</h1>\n                <small style=\"color: #888;\">unidades calculadas</small>\n            </div>`;\n}\n\n// CASO 2: ES LA LISTA DE USUARIOS\nelse if (tipoDato === 'USUARIO_LIST') {\n    html = `<b>👥 Usuarios Registrados</b><br><br><ul style=\"padding-left: 20px; margin: 0; line-height: 1.6;\">`;\n    filas.forEach(u => {\n        html += `<li><b>${u.nombre_completo || 'Sin Nombre'}</b> <span style=\"color:#888; font-size: 11px;\">(${u.usuario})</span></li>`;\n    });\n    html += `</ul>`;\n}\n\n// CASO 3: SON PIEZAS POR BÚSQUEDA O FECHA\nelse {\n    html = `<b>📋 Registros Encontrados</b><br>\n            <table class=\"bot-table\">\n                <thead>\n                    <tr><th>Pieza</th><th>Cant.</th><th>Usuario</th><th>Fecha</th></tr>\n                </thead>\n                <tbody>`;\n\n    filas.forEach((f) => {\n        let fShow = \"---\";\n        if (f.fecha) {\n            try {\n                let d = new Date(f.fecha);\n                fShow = `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;\n            } catch (e) { }\n        }\n        html += `<tr>\n                    <td>${f.tipo_pieza}</td>\n                    <td style=\"text-align:center;\"><b>${f.cantidad}</b></td>\n                    <td>${f.usuario}</td>\n                    <td>${fShow}</td>\n                 </tr>`;\n    });\n    html += `</tbody></table>`;\n}\n\n// Enviamos el HTML directamente y avisamos de que somos el bot\nmsg.payload = html;\nmsg.origen = \"bot\"; // <--- AVISAMOS DE QUE ES LA IA\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 840,
+        "wires": [
+            [
+                "6c66db7d76055c65"
+            ]
+        ]
+    },
+    {
+        "id": "6c66db7d76055c65",
+        "type": "ui_template",
+        "z": "90e51c80d7614276",
+        "group": "81a3b818e46c754e",
+        "name": "💬 Chat Dashboard",
+        "order": 1,
+        "width": 14,
+        "height": 10,
+        "format": "<style>\n    .chat-container {\n        display: flex;\n        flex-direction: column;\n        height: 100%;\n        background-color: #e5ddd5;\n        border-radius: 8px;\n        overflow: hidden;\n        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    }\n    .chat-messages {\n        flex-grow: 1;\n        padding: 15px;\n        overflow-y: auto;\n        display: flex;\n        flex-direction: column;\n        gap: 10px;\n    }\n    .message {\n        max-width: 85%;\n        padding: 10px 15px;\n        border-radius: 12px;\n        font-size: 14px;\n        line-height: 1.4;\n        word-wrap: break-word;\n        position: relative;\n        box-shadow: 0 1px 2px rgba(0,0,0,0.1);\n    }\n    .msg-user {\n        align-self: flex-end;\n        background-color: #dcf8c6;\n        border-bottom-right-radius: 2px;\n        color: #303030;\n    }\n    .msg-bot {\n        align-self: flex-start;\n        background-color: #ffffff;\n        border-bottom-left-radius: 2px;\n        color: #303030;\n    }\n    .chat-input-area {\n        display: flex;\n        padding: 10px;\n        background-color: #f0f0f0;\n        border-top: 1px solid #ccc;\n    }\n    .chat-input-area input {\n        flex-grow: 1;\n        padding: 12px;\n        border: none;\n        border-radius: 20px;\n        outline: none;\n        font-size: 14px;\n    }\n    .chat-input-area button {\n        background-color: #00a884;\n        color: white;\n        border: none;\n        border-radius: 50%;\n        width: 45px;\n        height: 45px;\n        margin-left: 10px;\n        cursor: pointer;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n    }\n    .timestamp {\n        font-size: 10px;\n        color: #999;\n        text-align: right;\n        margin-top: 5px;\n        display: block;\n    }\n    .bot-table {\n        width: 100%;\n        border-collapse: collapse;\n        margin-top: 10px;\n        font-size: 12px;\n    }\n    .bot-table th, .bot-table td {\n        border: 1px solid #ddd;\n        padding: 6px;\n        text-align: left;\n    }\n    .bot-table th {\n        background-color: #f7f7f7;\n        font-weight: bold;\n    }\n</style>\n\n<div class=\"chat-container\" ng-init=\"messages=[]\">\n    <div class=\"chat-messages\" id=\"chatBox\">\n        <div class=\"message msg-bot\">\n            <b>🤖 Sistema SQL Integrado</b><br>\n            Hola, estoy listo para buscar, listar usuarios o calcular producción.\n            <span class=\"timestamp\">{{Date.now() | date:'HH:mm'}}</span>\n        </div>\n        \n        <div ng-repeat=\"msg in messages track by $index\" \n             class=\"message\" \n             ng-class=\"{'msg-user': msg.sender == 'user', 'msg-bot': msg.sender == 'bot'}\">\n            \n            <div ng-if=\"msg.sender == 'bot'\" ng-bind-html=\"msg.text\"></div>\n            <div ng-if=\"msg.sender == 'user'\">{{msg.text}}</div>\n            <span class=\"timestamp\">{{msg.time}}</span>\n        </div>\n    </div>\n    \n    <div class=\"chat-input-area\">\n        <input type=\"text\" ng-model=\"inputText\" ng-keyup=\"$event.keyCode == 13 && sendMessage()\" placeholder=\"¿Qué necesitas buscar?\">\n        <button ng-click=\"sendMessage()\">\n            <svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"currentColor\"><path d=\"M2.01 21L23 12 2.01 3 2 10l15 2-15 2z\"/></svg>\n        </button>\n    </div>\n</div>\n\n<script>\n(function(scope) {\n    scope.sendMessage = function() {\n        if (!scope.inputText || scope.inputText.trim() === '') return;\n        var text = scope.inputText;\n        var time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});\n        \n        // Pintamos el mensaje en verde (usuario)\n        scope.messages.push({sender: 'user', text: text, time: time});\n        \n        // IMPORTANTE: Le decimos a Node-RED que este mensaje es nuestro (para ignorar ecos)\n        scope.send({payload: text, origen: \"chat_usuario\"});\n        \n        scope.inputText = '';\n        setTimeout(scrollToBottom, 100);\n    };\n    \n    scope.$watch('msg', function(newMsg) {\n        // Si el mensaje viene de vuelta, miramos que NO sea el nuestro rebotado\n        if (newMsg && newMsg.payload && newMsg.origen !== \"chat_usuario\") {\n            var time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});\n            scope.messages.push({sender: 'bot', text: newMsg.payload, time: time});\n            setTimeout(scrollToBottom, 100);\n        }\n    });\n    \n    function scrollToBottom() {\n        var objDiv = document.getElementById(\"chatBox\");\n        if (objDiv) objDiv.scrollTop = objDiv.scrollHeight;\n    }\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 320,
+        "y": 700,
+        "wires": [
+            [
+                "07a6c4e3b955ee9e"
+            ]
         ]
     }
 ]
